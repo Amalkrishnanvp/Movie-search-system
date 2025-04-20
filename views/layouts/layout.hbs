@@ -21,12 +21,15 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
+
 </head>
 
 <body>
 
-
-    {{#if admin}}
+    {{#if isLoginPage}}
+    {{{body}}}
+    {{else}}
+    {{#if isAdmin}}
     {{> adminHeader}}
     {{{body}}}
     {{> adminFooter}}
@@ -35,6 +38,10 @@
     {{{body}}}
     {{> userFooter}}
     {{/if}}
+    {{/if}}
+
+
+
 
 
 

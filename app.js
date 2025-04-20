@@ -4,6 +4,7 @@ const port = 4000;
 const hbs = require("hbs");
 const path = require("path");
 const { connectToDb } = require("./config/connection");
+const session = require("express-session");
 
 // Register a helper to add 1 to the index
 hbs.registerHelper("addOne", (index) => {
@@ -23,8 +24,10 @@ app.set("view options", { layout: "layouts/layout" });
 hbs.registerPartials(path.join(__dirname, "views/partials"));
 
 // Import routes
-const userRouter = require("./routes/user");
-const adminRouter = require("./routes/admin");
+const userRouter = require("./routes/userRoutes");
+const adminRouter = require("./routes/adminRoutes");
+const authRouter = require("./routes/authRoutes");
+const movieRouter = require("./routes/movieRoutes");
 
 // Serve static files from 'public' folder
 app.use(express.static("public"));
@@ -35,12 +38,29 @@ app.use(express.json());
 // Middleware to Parse URL-encoded data
 app.use(express.urlencoded({ extended: true }));
 
+// Session setup
+app.use(
+  session({
+    secret: "Key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
+
+// Redirect base request to /user
+app.get("/", async (req, res) => {
+  res.redirect("/user");
+});
+
 // Connect to db
 connectToDb();
 
 // Use routes
-app.use("/", userRouter);
+app.use("/user", userRouter);
 app.use("/admin", adminRouter);
+app.use("/auth", authRouter);
+app.use("/movie", movieRouter);
 
 // Start server
 app.listen(port, () => {

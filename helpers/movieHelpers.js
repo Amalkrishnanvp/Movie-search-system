@@ -1,4 +1,5 @@
 const Movie = require("../models/movie");
+const Favourite = require("../models/favourite");
 
 module.exports = {
   // Function to get movies by name
@@ -52,5 +53,21 @@ module.exports = {
     console.log("All movies", movies);
 
     return movies;
+  },
+
+  // Function to add movie to favourites
+  addMovieToFavourites: async (movie) => {
+    const newFavMovie = await Favourite.create({
+      Title: movie.Title,
+      Year: movie.Year,
+      imdbID: movie.imdbID,
+      Type: movie.Type,
+      Genre: movie.Genre,
+      Poster: movie.Poster,
+    });
+
+    console.log("Movie added to favourites: ", newFavMovie);
+
+    return { newFavMovie, status: true };
   },
 };

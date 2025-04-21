@@ -70,4 +70,12 @@ module.exports = {
 
     return { newFavMovie, status: true };
   },
+
+  // Function to get all favourite movies from database
+  getAllFavouritesFromDb: async (userId) => {
+    const favouriteMovies = await Favourite.find({ userId: userId });
+    console.log("All favourite movies", favouriteMovies);
+
+    return favouriteMovies;
+  },
 };

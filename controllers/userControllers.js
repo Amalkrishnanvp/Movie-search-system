@@ -5,12 +5,21 @@ module.exports = {
   renderHomepage: async (req, res) => {
     // Access if session exists
     let user = req.session.user;
+    // console.log("User session: ", user);
+    // let userId = req.session.user._id;
+    // console.log("User id: ", userId);
 
     if (user) {
+      const userId = user._id;
+      console.log("User id: ", userId);
       // Call function to get all movies
       const movies = await movieHelpers.getAllMoviesFromDb();
+      // const favouriteMovies = await movieHelpers.getAllFavouritesFromDb(
+      //   user._id
+      // );
+      // console.log("favourite movies: ", favouriteMovies);
 
-      res.render("user/view-movies", { movies, user });
+      res.render("user/view-movies", { movies, user, userId });
     } else {
       res.redirect("/auth/login");
     }

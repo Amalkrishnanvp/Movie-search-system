@@ -1,5 +1,6 @@
 const Movie = require("../models/movie");
 const Favourite = require("../models/favourite");
+const { ObjectId } = require("mongoose").Types;
 
 module.exports = {
   // Function to get movies by name
@@ -56,24 +57,55 @@ module.exports = {
   },
 
   // Function to add movie to favourites
-  addMovieToFavourites: async (movie) => {
-    const newFavMovie = await Favourite.create({
-      Title: movie.Title,
-      Year: movie.Year,
-      imdbID: movie.imdbID,
-      Type: movie.Type,
-      Genre: movie.Genre,
-      Poster: movie.Poster,
+  addMovieToFavourites: async (movie, userId) => {
+    let movieId = movie.imdbID;
+
+    let userFavourites = await Favourite.findOne({
+      user: new ObjectId(userId),
     });
 
-    console.log("Movie added to favourites: ", newFavMovie);
+    if (userFavourites) {
+      // Check if movie already exists in favourites
+      const isMovieInFavourites = userFavourites.favouriteMovies.some(
+        (favouriteMovie) => favouriteMovie === movieId
+      );
 
-    return { newFavMovie, status: true };
+      if (isMovieInFavourites) {
+        console.log("Movie already from favourites: ", movieId);
+        return { status: false, message: "Movie already in favourites" };
+      } else {
+        // Add movie to favourites
+        await Favourite.updateOne(
+          { user: new ObjectId(userId) },
+          { $push: { favouriteMovies: movieId } }
+        );
+        console.log("Movie added to favourites: ", movieId);
+        return { movieId, status: true };
+      }
+    } else {
+      // Create favourite document to user
+      const response = await Favourite.create({
+        user: new ObjectId(userId),
+        favouriteMovies: movieId,
+      });
+
+      console.log("Movie added to favourites: ", movieId);
+      return { movieId, status: true };
+    }
   },
 
   // Function to get all favourite movies from database
   getAllFavouritesFromDb: async (userId) => {
-    const favouriteMovies = await Favourite.find({ userId: userId });
+    const userFavourites = await Favourite.findOne({
+      user: new ObjectId(userId),
+    });
+    // console.log(userFavourites);
+    const favouriteMovies = userFavourites.favouriteMovies;
+
+    // if (favouriteMovies.length === 0) {
+    //   console.log("No favourite movies found for user: ", userId);
+    //   return [];
+    // }
     console.log("All favourite movies", favouriteMovies);
 
     return favouriteMovies;

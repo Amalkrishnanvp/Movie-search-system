@@ -5,7 +5,7 @@ module.exports = {
   renderHomepage: async (req, res) => {
     // Access if session exists
     let user = req.session.user;
-    // console.log("User session: ", user);
+    console.log("User session: ", user);
     // let userId = req.session.user._id;
     // console.log("User id: ", userId);
 
@@ -14,12 +14,12 @@ module.exports = {
       console.log("User id: ", userId);
       // Call function to get all movies
       const movies = await movieHelpers.getAllMoviesFromDb();
-      // const favouriteMovies = await movieHelpers.getAllFavouritesFromDb(
-      //   user._id
-      // );
+      const favouriteMovies = await movieHelpers.getAllFavouritesFromDb(
+        user._id
+      );
       // console.log("favourite movies: ", favouriteMovies);
 
-      res.render("user/view-movies", { movies, user, userId });
+      res.render("user/view-movies", { movies, user, favouriteMovies });
     } else {
       res.redirect("/auth/login");
     }
@@ -31,13 +31,15 @@ module.exports = {
       // console.log("favourites router");
       const movieId = req.body.imdbID;
       console.log("Movie id: ", movieId);
+      const userId = req.session.user._id;
+      console.log("hello", userId);
 
       const movie = await movieHelpers.geMovieById(movieId);
-      const result = await movieHelpers.addMovieToFavourites(movie);
+      const result = await movieHelpers.addMovieToFavourites(movie, userId);
 
       res.status(200).json({
         success: true,
-        message: "Movie added to favourites",
+        message: result.message,
         movie: result, // Optional: only if you want to return the saved movie
       });
     } catch (error) {

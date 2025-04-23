@@ -34,14 +34,33 @@
                         </svg>
                     </a>
                     <!-- Favorite button -->
-                    <button class="p-2 text-gray-400 hover:text-red-500 transition-colors duration-200"
-                        onclick="addToFavourites(event, '{{this.imdbID}}', '{{../userId}}')">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" id="heart-{{this.imdbID}}">
+                    <button class="p-2 group transition-colors duration-200"
+                        onclick="addToFavourites(event, '{{this.imdbID}}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400 group-hover:text-red-500"
+                            fill="none" stroke="currentColor" viewBox="0 0 24 24" id="heart-{{this.imdbID}}"
+                            data-favorite="false">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                     </button>
+                    {{#isMovieInFavourites this.imdbID, ../favouriteMovies}}
+                    <script>
+                        heartIcon.setAttribute("fill", "none");
+                        heartIcon.setAttribute("stroke", "currentColor");
+                        heartIcon.classList.remove("text-red-500");
+                        heartIcon.classList.add("text-gray-400");
+                        heartIcon.setAttribute("data-favorite", "false");
+                    </script>
+                    {{else}}
+                    <script>
+                        heartIcon.setAttribute("fill", "currentColor");
+                        heartIcon.setAttribute("stroke", "none");
+                        heartIcon.classList.remove("text-gray-400");
+                        heartIcon.classList.add("text-red-500");
+                        heartIcon.setAttribute("data-favorite", "true");
+                    </script>
+                    {{/isMovieInFavourites}}
+
                 </div>
             </div>
             {{/each}}

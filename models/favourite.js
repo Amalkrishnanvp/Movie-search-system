@@ -2,12 +2,8 @@ const mongoose = require("mongoose");
 
 // Defining a schema
 const favouriteSchema = new mongoose.Schema({
-  Title: { type: String, required: true },
-  Year: { type: String, required: true },
-  imdbID: { type: String, required: true, unique: true },
-  Type: { type: String, required: true },
-  Genre: { type: String, required: true },
-  Poster: { type: String },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  favouriteMovies: { type: Array, default: [], required: true },
 });
 
 // Creating a model

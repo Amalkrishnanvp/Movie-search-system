@@ -11,6 +11,16 @@ hbs.registerHelper("addOne", (index) => {
   return index + 1;
 });
 
+// Register a helper to check if a value is in an array
+hbs.registerHelper(
+  "isMovieInFavourites",
+  function (movieId, moviesArray, options) {
+    return moviesArray.includes(movieId.toString())
+      ? options.fn(this)
+      : options.inverse(this);
+  }
+);
+
 // Set view engine to hbs
 app.set("view engine", "hbs");
 

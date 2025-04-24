@@ -80,7 +80,7 @@ module.exports = {
           { $push: { favouriteMovies: movieId } }
         );
         console.log("Movie added to favourites: ", movieId);
-        return { movieId, status: true };
+        return { movieId, status: true, message: "Movie added to favourites" };
       }
     } else {
       // Create favourite document to user
@@ -90,7 +90,11 @@ module.exports = {
       });
 
       console.log("Movie added to favourites: ", movieId);
-      return { movieId, status: true };
+      return {
+        movieId,
+        status: true,
+        message: "Movie added to favouritesssss",
+      };
     }
   },
 
@@ -101,6 +105,8 @@ module.exports = {
     });
     // console.log(userFavourites);
     const favouriteMovies = userFavourites.favouriteMovies;
+    const favouriteMoviesCount = favouriteMovies.length;
+    // console.log("favourite movies count: ", favouriteMoviesCount);
 
     // if (favouriteMovies.length === 0) {
     //   console.log("No favourite movies found for user: ", userId);
@@ -108,6 +114,6 @@ module.exports = {
     // }
     console.log("All favourite movies", favouriteMovies);
 
-    return favouriteMovies;
+    return { favouriteMovies, favouriteMoviesCount };
   },
 };

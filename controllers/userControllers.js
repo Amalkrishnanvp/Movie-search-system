@@ -14,12 +14,11 @@ module.exports = {
       console.log("User id: ", userId);
       // Call function to get all movies
       const movies = await movieHelpers.getAllMoviesFromDb();
-      const favouriteMovies = await movieHelpers.getAllFavouritesFromDb(
-        user._id
-      );
+      const { favouriteMovies, favouriteMoviesCount } =
+        await movieHelpers.getAllFavouritesFromDb(user._id);
       // console.log("favourite movies: ", favouriteMovies);
 
-      res.render("user/view-movies", { movies, user, favouriteMovies });
+      res.render("user/view-movies", { movies, user, favouriteMovies, favouriteMoviesCount });
     } else {
       res.redirect("/auth/login");
     }
@@ -36,6 +35,7 @@ module.exports = {
 
       const movie = await movieHelpers.geMovieById(movieId);
       const result = await movieHelpers.addMovieToFavourites(movie, userId);
+      console.log("result",result)
 
       res.status(200).json({
         success: true,

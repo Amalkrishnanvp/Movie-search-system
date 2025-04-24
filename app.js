@@ -21,6 +21,12 @@ hbs.registerHelper(
   }
 );
 
+// Register a helper to check if a value is in an array
+hbs.registerHelper("isFavourite", function (favourites, imdbID, options) {
+  const found = favourites.some((movie) => movie.imdbID === imdbID);
+  return found ? options.fn(this) : options.inverse(this);
+});
+
 // Set view engine to hbs
 app.set("view engine", "hbs");
 

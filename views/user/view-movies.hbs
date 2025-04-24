@@ -36,7 +36,7 @@
                     <!-- Favorite button -->
                     <button class="p-2 group transition-colors duration-200"
                         onclick="addToFavourites(event, '{{this.imdbID}}')">
-                        {{#isMovieInFavourites this.imdbID ../favouriteMovies}}
+                        {{#isMovieInFavourites this.imdbID ../favouriteMoviesIds}}
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 group-hover:text-gray-400"
                             fill="currentColor" viewBox="0 0 24 24" id="heart-{{this.imdbID}}" data-favorite="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

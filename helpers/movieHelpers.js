@@ -60,6 +60,10 @@ module.exports = {
   addMovieToFavourites: async (movie, userId) => {
     let movieId = movie.imdbID;
 
+    let movieObject = await Movie.findOne({ imdbID: movieId });
+    let movieObjectId = movieObject._id;
+    console.log("movieObjectId: ", movieObjectId);
+
     let userFavourites = await Favourite.findOne({
       user: new ObjectId(userId),
     });
@@ -67,7 +71,7 @@ module.exports = {
     if (userFavourites) {
       // Check if movie already exists in favourites
       const isMovieInFavourites = userFavourites.favouriteMovies.some(
-        (favouriteMovie) => favouriteMovie === movieId
+        (favouriteMovie) => favouriteMovie === movieObjectId
       );
 
       if (isMovieInFavourites) {
@@ -77,7 +81,7 @@ module.exports = {
         // Add movie to favourites
         await Favourite.updateOne(
           { user: new ObjectId(userId) },
-          { $push: { favouriteMovies: movieId } }
+          { $push: { favouriteMovies: new ObjectId(movieObjectId) } }
         );
         console.log("Movie added to favourites: ", movieId);
         return { movieId, status: true, message: "Movie added to favourites" };
@@ -86,7 +90,7 @@ module.exports = {
       // Create favourite document to user
       const response = await Favourite.create({
         user: new ObjectId(userId),
-        favouriteMovies: movieId,
+        favouriteMovies: new ObjectId(movieObjectId),
       });
 
       console.log("Movie added to favourites: ", movieId);
@@ -99,21 +103,59 @@ module.exports = {
   },
 
   // Function to get all favourite movies from database
-  getAllFavouritesFromDb: async (userId) => {
+  getAllFavouritesIdsFromDb: async (userId) => {
     const userFavourites = await Favourite.findOne({
       user: new ObjectId(userId),
-    });
+    }).populate("favouriteMovies");
+    // console.log("user fav: ", userFavourites);
+
+    if (userFavourites === null) {
+      console.log("No favourite movies found for user: ", userId);
+      return [];
+    }
     // console.log(userFavourites);
     const favouriteMovies = userFavourites.favouriteMovies;
-    const favouriteMoviesCount = favouriteMovies.length;
+    const favouriteMoviesIds = favouriteMovies.map((movie) => movie.imdbID);
+    console.log(favouriteMoviesIds);
+
     // console.log("favourite movies count: ", favouriteMoviesCount);
 
     // if (favouriteMovies.length === 0) {
     //   console.log("No favourite movies found for user: ", userId);
     //   return [];
     // }
-    console.log("All favourite movies", favouriteMovies);
+    console.log("All favourite movies ids", favouriteMoviesIds);
 
-    return { favouriteMovies, favouriteMoviesCount };
+    return favouriteMoviesIds;
+  },
+
+  // Function to get favourite movies count
+  getFavouriteMoviesCount: async (userId) => {
+    const userFavourites = await Favourite.findOne({
+      user: new ObjectId(userId),
+    });
+    if (userFavourites === null) {
+      console.log("No favourite movies found for user: ", userId);
+      return 0;
+    }
+    const favouriteMoviesCount = userFavourites.favouriteMovies.length;
+
+    // console.log("favourite movies count: ", favouriteMoviesCount);
+
+    return favouriteMoviesCount;
+  },
+
+  // Function to get all favourite movies from database
+  getAllFavouritesFromDb: async (userId) => {
+    const favouriteMovies = await Favourite.findOne({
+      user: new ObjectId(userId),
+    }).populate("favouriteMovies");
+
+    if (favouriteMovies === null) {
+      console.log("No favourite movies found for user: ", userId);
+      return [];
+    }
+
+    return favouriteMovies;
   },
 };

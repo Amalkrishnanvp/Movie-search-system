@@ -8,4 +8,7 @@ router.get("/", userController.renderHomepage);
 /* GET - Add to favourites */
 router.post("/add-to-favourites", userController.addToFavourites);
 
+/* GET - Render favourite movies page */
+router.get("/favourites", userController.renderFavouritesPage);
+
 module.exports = router;

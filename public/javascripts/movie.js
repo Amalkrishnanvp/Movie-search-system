@@ -46,26 +46,52 @@ const addToFavourites = async (event, imdbID, userId) => {
     heartIcon.classList.add("text-red-500");
     heartIcon.setAttribute("data-favorite", "true");
   }
-  
-  // API call to add movie to favorites
-  const response = await fetch("/user/add-to-favourites", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+
+  $.ajax({
+    url: "/user/add-to-favourites",
+    type: "POST",
+    data: {
+      imdbID,
+      userId,
     },
-    body: JSON.stringify({ imdbID }),
+    success: (response) => {
+      console.log("Response: ", response);
+      if (response.success) {
+        alert(response.message);
+        const favoriteMovieCountShower = document.getElementById(
+          "favourite-movies-count"
+        );
+        const favouriteMoviesCount = response.favouriteMoviesCount;
+        favoriteMovieCountShower.innerText = favouriteMoviesCount;
+      } else {
+        alert(response.message);
+      }
+    },
   });
 
-  if (response.ok) {
-    const data = await response.json();
-    alert(data.message);
-  } else {
-    const error = await response.json();
-    alert(data.message);
-    console.error("Error: ", error);
-  }
+  // API call to add movie to favorites
+  // const response = await fetch("/user/add-to-favourites", {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify({ imdbID }),
+  // });
+
+  // if (response.ok) {
+  //   const favoriteMovieCountShower = document.getElementById(
+  //     "favourite-movie-count"
+  //   );
+  //   const data = await response.json();
+  //   alert(data.message);
+  //   const favouriteMoviesCount = data.favouriteMoviesCount;
+  //   favoriteMovieCountShower.innerText = favouriteMoviesCount;
+  // } else {
+  //   const error = await response.json();
+  //   alert(data.message);
+  //   console.error("Error: ", error);
+  // }
 };
 
-// Function to toggle favourite button 
-toggleFavouriteButton = () => {}
-
+// Function to toggle favourite button
+// toggleFavouriteButton = () => {};

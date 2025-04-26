@@ -1,8 +1,11 @@
 const movieHelpers = require("../helpers/movieHelpers");
 
+// Function to verify login
+
 module.exports = {
   // Function to render home page
   renderHomepage: async (req, res) => {
+    console.log("home page router");
     // Access if session exists
     let user = req.session.user;
     console.log("User session: ", user);
@@ -26,6 +29,7 @@ module.exports = {
       res.render("user/view-movies", {
         movies,
         user,
+        isUser: user && user.role === "user",
         favouriteMoviesIds,
         favouriteMoviesCount,
       });
@@ -67,6 +71,7 @@ module.exports = {
 
   // Function to render favourite movies page
   renderFavouritesPage: async (req, res) => {
+    console.log("favourites router");
     // Access if session exists
     let user = req.session.user;
     console.log("User session: ", user);
@@ -89,6 +94,7 @@ module.exports = {
         favouriteMovies: favouriteMovies.favouriteMovies,
         user,
         favouriteMoviesCount,
+        isUser: user && user.role === "user",
       });
     } else {
       res.redirect("/auth/login");

@@ -20,23 +20,24 @@
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    {{!-- Flowbite CSS --}}
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
 </head>
 
 <body>
 
-    {{#if isLoginPage}}
+{{#if isLoginPage}}
+  {{{body}}}
+{{else}}
+  {{#if isAdmin}}
     {{{body}}}
-    {{else}}
-    {{#if isAdmin}}
-    {{> adminHeader}}
-    {{{body}}}
-    {{> adminFooter}}
-    {{else}}
+  {{else if isUser}}
     {{> userHeader}}
     {{{body}}}
     {{> userFooter}}
-    {{/if}}
-    {{/if}}
+  {{/if}}
+{{/if}}
 
 
 
@@ -48,6 +49,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     {{!-- Axios cdn --}}
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {{!-- Flowbite JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 
 </body>

@@ -1,17 +1,18 @@
 <header class="sticky z-50 top-0">
     <nav class="bg-white border-gray-200 dark:bg-gray-900">
         <!-- Increased navbar height -->
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-6 h-24 me-4">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-24 me-4">
             <!-- Logo/Brand -->
             <div class="flex items-center">
                 <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <!-- Movie camera icon -->
-                    <svg class="h-8 w-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
+                    {{!-- <svg class="h-8 w-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                    </svg>
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MovieSeek</span>
+                    </svg> --}}
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Admin
+                        Panel</span>
                 </a>
             </div>
 
@@ -69,7 +70,7 @@
                 </ul>
 
                 <!-- User dropdown -->
-                {{#if user}}
+             
                 <div class="relative">
                     <div class="flex py-1 px-2">
                         <button type="button"
@@ -78,13 +79,14 @@
                             data-dropdown-placement="bottom">
                             <h3 class="text-white text-base me-3">{{user.name}}</h3>
                             <span class="sr-only">Open user menu</span>
-                            <div class="relative w-10 h-10 overflow-hidden bg-blue-100 rounded-full">
-                                <svg class="absolute w-12 h-12 text-blue-400 -left-1" fill="currentColor"
+                            <div class="relative w-7 h-7 overflow-hidden bg-blue-100 rounded-full">
+                                <svg class="absolute w-9 h- text-blue-400 -left-1" fill="currentColor"
                                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                         clip-rule="evenodd"></path>
                                 </svg>
                             </div>
+
                         </button>
                     </div>
 
@@ -104,39 +106,7 @@
                         </ul>
                     </div>
                 </div>
-                {{else}}
-                <div class="relative">
-                    <div class="flex py-1 px-2">
-                        <button type="button"
-                            class="flex items-center text-sm bg-blue-700 hover:bg-blue-600 rounded-md px-3 py-2 transition-all duration-200"
-                            id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
-                            data-dropdown-placement="bottom">
-                            <h3 class="text-white text-base me-3">{{user.name}}</h3>
-                            <span class="sr-only">Open user menu</span>
-                            <div class="relative w-10 h-10 overflow-hidden bg-blue-100 rounded-full">
-                                <svg class="absolute w-12 h-12 text-blue-400 -left-1" fill="currentColor"
-                                    viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                        </button>
-                    </div>
-
-                    <!-- Dropdown menu -->
-                    <div class="hidden absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-blue-600 shadow-lg ring-1 ring-black ring-opacity-10 focus:outline-none"
-                        id="user-dropdown" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
-                        <ul class="py-2" role="none">
-                            <li>
-                                <a href="/auth/login"
-                                    class="block px-4 py-2 text-sm text-white hover:bg-blue-500 hover:text-white transition-colors duration-150"
-                                    role="menuitem">Log in</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                {{/if}}
-
+             
 
 
             </div>

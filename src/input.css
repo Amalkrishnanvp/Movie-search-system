@@ -2,9 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "flowbite";
+
 body {
   font-family: "Poppins", sans-serif;
 }
 .hide {
   display: none !important;
+}
+
+.background-image {
+  background-image: url("https://image.tmdb.org/t/p/original{{movieData.backdrop_path}}");
+  background-size: cover;
+  background-position: center;
 }

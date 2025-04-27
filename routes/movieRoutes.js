@@ -8,4 +8,7 @@ router.get("/get-movies", movieController.getMovies);
 /* POST - Add movie to database */
 router.post("/add-movie", movieController.addMovie);
 
+/* GET - Get movie by id */
+router.get("/get-movie/:id", movieController.getMovieById);
+
 module.exports = router;

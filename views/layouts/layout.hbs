@@ -1,60 +1,59 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Search System</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Search System</title>
 
-    {{! Css styles }}
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+  {{! Css styles }}
+  <link rel="stylesheet" href="/stylesheets/style.css" />
 
-    {{! Google Fonts }}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet" />
+  {{! Google Fonts }}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
 
-    {{! Font Awesome }}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {{! Font Awesome }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    {{!-- Flowbite CSS --}}
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+
+
+
+  {{!-- Flowbite CSS --}}
+  {{!--
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" /> --}}
 
 </head>
 
 <body>
 
-{{#if isLoginPage}}
+  {{#if isLoginPage}}
   {{{body}}}
-{{else}}
-  {{#if isAdmin}}
-    {{{body}}}
-  {{else if isUser}}
-    {{> userHeader}}
-    {{{body}}}
-    {{> userFooter}}
+  {{else}}
+  {{> userHeader}}
+  {{{body}}}
+  {{> userFooter}}
   {{/if}}
-{{/if}}
 
 
 
-    {{!-- Jquery cdn --}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {{! Website scripts }}
-    <script src="/javascripts/movie.js"></script>
-    <!-- Dropdown script (needs Flowbite JS) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    {{!-- Axios cdn --}}
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    {{!-- Flowbite JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  {{!-- Jquery cdn --}}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  {{! Website scripts }}
+  <script src="/javascripts/movie.js"></script>
+  <!-- Dropdown script (needs Flowbite JS) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  {{!-- Axios cdn --}}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  {{!-- Flowbite JS --}}
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 
 </body>
-
-
 
 </html>

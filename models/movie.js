@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 // Defining a schema
 const movieSchema = new mongoose.Schema({
   Title: { type: String, required: true },
-  Year: { type: String, required: true },
+  ReleaseDate: { type: String, required: true },
   imdbID: { type: String, required: true, unique: true },
+  tmdbId: { type: String, required: true, unique: true },
   Type: { type: String, required: true },
   Genre: { type: String, required: true },
-  Poster: { type: String },
+  PosterPath: { type: String, required: true },
 });
 
 // Creating a model

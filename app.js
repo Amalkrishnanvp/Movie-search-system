@@ -22,8 +22,8 @@ hbs.registerHelper(
 );
 
 // Register a helper to check if a value is in an array
-hbs.registerHelper("isFavourite", function (favourites, imdbID, options) {
-  const found = favourites.some((movie) => movie.imdbID === imdbID);
+hbs.registerHelper("isFavourite", function (favourites, tmdbId, options) {
+  const found = favourites.some((movie) => movie.tmdbId === tmdbId);
   return found ? options.fn(this) : options.inverse(this);
 });
 

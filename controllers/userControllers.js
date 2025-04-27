@@ -12,42 +12,58 @@ module.exports = {
     // let userId = req.session.user._id;
     // console.log("User id: ", userId);
 
-    if (user) {
-      const userId = user._id;
-      console.log("User id: ", userId);
-      // Call function to get all movies
-      const movies = await movieHelpers.getAllMoviesFromDb();
-      const favouriteMoviesIds = await movieHelpers.getAllFavouritesIdsFromDb(
-        user._id
-      );
-      console.log("favourite movies ids: ", favouriteMoviesIds);
-      const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
-        user._id
-      );
-      // console.log("favourite movies: ", favouriteMovies);
-
-      res.render("user/view-movies", {
-        movies,
-        user,
-        isUser: user && user.role === "user",
-        favouriteMoviesIds,
-        favouriteMoviesCount,
-      });
-    } else {
-      res.redirect("/auth/login");
+    if (!user || user.role !== "user") {
+      return res.redirect("/auth/login");
     }
+
+    const userId = user._id;
+    console.log("User id: ", userId);
+    // Call function to get all movies
+    const movies = await movieHelpers.getAllMoviesFromDb();
+    const favouriteMoviesIds = await movieHelpers.getAllFavouritesIdsFromDb(
+      user._id
+    );
+    console.log("favourite movies ids: ", favouriteMoviesIds);
+    const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
+      user._id
+    );
+    // console.log("favourite movies: ", favouriteMovies);
+
+    const popularMovies = await movieHelpers.getPopularMoviesFromTmdbApi();
+    console.log("popular movies: ", popularMovies);
+    const genres = await movieHelpers.getAllGenresFromTmdbApi();
+
+    popularMovies.forEach((movie) => {
+      movie.genre_names = movie.genre_ids.map((genreId) => {
+        const genre = genres.find((g) => g.id === genreId);
+        return genre ? genre.name : null;
+      });
+    });
+
+    const newMovies = await movieHelpers.getNewMoviesFromTmdbApi();
+
+    res.render("user/home", {
+      movies,
+      user,
+      isUser: user && user.role === "user",
+      favouriteMoviesIds,
+      favouriteMoviesCount,
+      popularMovies,
+      genres,
+      newMovies,
+    });
   },
 
   // Function to add movie to favourites
   addToFavourites: async (req, res) => {
     try {
       // console.log("favourites router");
-      const movieId = req.body.imdbID;
+      const movieId = req.body.tmdbId;
       console.log("Movie id: ", movieId);
       const userId = req.session.user._id;
       console.log("hello", userId);
 
-      const movie = await movieHelpers.geMovieById(movieId);
+      const movie = await movieHelpers.getMovieById(movieId);
       const result = await movieHelpers.addMovieToFavourites(movie, userId);
       const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
         userId
@@ -94,10 +110,41 @@ module.exports = {
         favouriteMovies: favouriteMovies.favouriteMovies,
         user,
         favouriteMoviesCount,
-        isUser: user && user.role === "user",
       });
     } else {
       res.redirect("/auth/login");
     }
+  },
+
+  // Function to get movies
+  getMovies: async (req, res) => {
+    let user = req.session.user;
+    console.log("User session: ", user);
+    // let userId = req.session.user._id;
+    // console.log("User id: ", userId);
+
+    if (!user || user.role !== "user") {
+      return res.redirect("/auth/login");
+    }
+
+    const userId = user._id;
+    console.log("User id: ", userId);
+    // Call function to get all movies
+    const movies = await movieHelpers.getAllMoviesFromDb();
+    const favouriteMoviesIds = await movieHelpers.getAllFavouritesIdsFromDb(
+      user._id
+    );
+    console.log("favourite movies ids: ", favouriteMoviesIds);
+    const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
+      user._id
+    );
+    // console.log("favourite movies: ", favouriteMovies);
+
+    res.render("user/view-movies", {
+      movies,
+      user,
+      favouriteMoviesIds,
+      favouriteMoviesCount,
+    });
   },
 };

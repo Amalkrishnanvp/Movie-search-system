@@ -8,39 +8,47 @@ module.exports = {
     const apiKey = "aefbb563";
     const title = movieName;
 
+    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+
     const response = await fetch(
-      `http://www.omdbapi.com/?s=${title}&apikey=${apiKey}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${title}`
     );
 
     const data = await response.json();
     // console.log(data);
 
-    return data.Search;
+    return data.results;
   },
   // Function to get movie by id
-  geMovieById: async (movieId) => {
-    const apiKey = "aefbb563";
-    const imdbID = movieId;
+  getMovieById: async (movieId) => {
+    // const apiKey = "aefbb563";
+    const id = movieId;
+
+    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
 
     const response = await fetch(
-      `https://www.omdbapi.com/?i=${imdbID}&apikey=${apiKey}`
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbApiKey}` // Use 'id' instead of 'movieId'
     );
 
     const data = await response.json();
-    // console.log(data);
+    console.log("eda movie data: ", data);
 
     return data;
   },
 
   // Function to add movie to the database
-  addMovieToDb: async (movie) => {
+  addMovieToDb: async (movieData) => {
+    // Take the genres array and convert to string
+    const genres = movieData.genres.map((genre) => genre.name).join(", ");
+
     const newMovie = await Movie.create({
-      Title: movie.Title,
-      Year: movie.Year,
-      imdbID: movie.imdbID,
-      Type: movie.Type,
-      Genre: movie.Genre,
-      Poster: movie.Poster,
+      Title: movieData.title,
+      ReleaseDate: movieData.release_date,
+      imdbID: movieData.imdb_id,
+      tmdbId: movieData.id,
+      Type: "Movie",
+      Genre: genres,
+      PosterPath: movieData.poster_path,
     });
 
     console.log("Movie inserted: ", newMovie);
@@ -58,9 +66,12 @@ module.exports = {
 
   // Function to add movie to favourites
   addMovieToFavourites: async (movie, userId) => {
-    let movieId = movie.imdbID;
+    console.log("movie: ", movie);
+    let movieId = movie.id;
+    console.log("movieId: ", movieId);
 
-    let movieObject = await Movie.findOne({ imdbID: movieId });
+    let movieObject = await Movie.findOne({ tmdbId: movieId });
+    console.log("movieObject: ", movieObject);
     let movieObjectId = movieObject._id;
     console.log("movieObjectId: ", movieObjectId);
 
@@ -115,7 +126,7 @@ module.exports = {
     }
     // console.log(userFavourites);
     const favouriteMovies = userFavourites.favouriteMovies;
-    const favouriteMoviesIds = favouriteMovies.map((movie) => movie.imdbID);
+    const favouriteMoviesIds = favouriteMovies.map((movie) => movie.tmdbId);
     console.log(favouriteMoviesIds);
 
     // console.log("favourite movies count: ", favouriteMoviesCount);
@@ -158,4 +169,38 @@ module.exports = {
 
     return favouriteMovies;
   },
+
+  // Function to get popular movies from TMDB API
+  getPopularMoviesFromTmdbApi: async () => {
+    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${tmdbApiKey}`
+    );
+    const data = await response.json();
+    // console.log("Popular movies: ", data.results);
+    return data.results;
+  },
+
+  // Function to get genres from TMDB API
+  getAllGenresFromTmdbApi: async () => {
+    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const response = await fetch(
+      `https://api.themoviedb.org/3/genre/movie/list?api_key=${tmdbApiKey}`
+    );
+    const data = await response.json();
+    console.log("Genres: ", data.genres);
+    return data.genres;
+  },
+
+  // Function to get new movies from TMDB API
+  getNewMoviesFromTmdbApi: async () => {
+    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${tmdbApiKey}`
+    );
+    const data = await response.json();
+    console.log("New movies: ", data.results);
+    return data.results;
+  },
+  
 };

@@ -13,6 +13,9 @@ const verifyLogin = (req, res, next) => {
 /* GET - Render home page */
 router.get("/", userController.renderHomepage);
 
+/*GET - Get movies */
+router.get("/movies", userController.getMovies);
+
 /* GET - Add to favourites */
 router.post("/add-to-favourites", userController.addToFavourites);
 

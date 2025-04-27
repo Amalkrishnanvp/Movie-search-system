@@ -8,4 +8,7 @@ router.get("/", adminController.getAdminPanel);
 /* GET - Movies list page */
 router.get("/movies", adminController.getMoviesList);
 
+/* GET - Admin Dashboard */
+router.get("/dashboard", adminController.getAdminDashboard);
+
 module.exports = router;

@@ -7,17 +7,17 @@ module.exports = {
     let user = req.session.user;
     // console.log("User session: ", user);
 
-    if (!user) {
+    if (!user || user.role !== "admin") {
       return res.redirect("/auth/login");
     }
 
     // Call function to get all movies from database
     // const movies = await movieHelpers.getAllMoviesFromDb();
 
-    res.render("admin/admin-panel", {
+    res.render("admin/admin-dashboard", {
       user,
       isAdmin: user && user.role === "admin",
-      // movies,
+      layout: "layouts/adminLayout",
     });
   },
 
@@ -39,6 +39,26 @@ module.exports = {
       user,
       isAdmin: user && user.role === "admin",
       movies,
+      layout: "layouts/adminLayout",
+    });
+  },
+
+  // Admin dashboard
+  getAdminDashboard: async (req, res) => {
+    // Access if session exists
+    let user = req.session.user;
+    // console.log("User session: ", user);
+
+    if (!user) {
+      return res.redirect("/auth/login");
+    }
+
+    // Call function to get all movies from database
+    const movies = await movieHelpers.getAllMoviesFromDb();
+    // console.log("Movies: ", movies);
+
+    res.render("admin/admin-dashboard", {
+      user,
       layout: "layouts/adminLayout",
     });
   },

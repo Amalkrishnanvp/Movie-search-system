@@ -3,7 +3,7 @@ const addMovie = async (event, movieId) => {
   try {
     event.preventDefault();
     // alert(movieId);
-    const response = await fetch("/admin/add-movie", {
+    const response = await fetch("/movie/add-movie", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -23,12 +23,12 @@ const addMovie = async (event, movieId) => {
 };
 
 // Toggle favorite state
-const addToFavourites = async (event, imdbID, userId) => {
-  console.log(imdbID, userId);
+const addToFavourites = async (event, tmdbId, userId) => {
+  console.log(tmdbId, userId);
   event.preventDefault();
   event.stopPropagation();
 
-  const heartIcon = document.getElementById(`heart-${imdbID}`);
+  const heartIcon = document.getElementById(`heart-${tmdbId}`);
   const isFavorite = heartIcon.getAttribute("data-favorite") === "true";
 
   if (isFavorite) {
@@ -51,7 +51,7 @@ const addToFavourites = async (event, imdbID, userId) => {
     url: "/user/add-to-favourites",
     type: "POST",
     data: {
-      imdbID,
+      tmdbId,
       userId,
     },
     success: (response) => {
@@ -69,28 +69,10 @@ const addToFavourites = async (event, imdbID, userId) => {
     },
   });
 
-  // API call to add movie to favorites
-  // const response = await fetch("/user/add-to-favourites", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify({ imdbID }),
-  // });
-
-  // if (response.ok) {
-  //   const favoriteMovieCountShower = document.getElementById(
-  //     "favourite-movie-count"
-  //   );
-  //   const data = await response.json();
-  //   alert(data.message);
-  //   const favouriteMoviesCount = data.favouriteMoviesCount;
-  //   favoriteMovieCountShower.innerText = favouriteMoviesCount;
-  // } else {
-  //   const error = await response.json();
-  //   alert(data.message);
-  //   console.error("Error: ", error);
-  // }
+//   const getMovieById = async (id) => {
+//     const response = await axios.get(`/movie/get-movie/${id}`);
+//     console.log("Fetched Movie: ", response.data);
+//   };
 };
 
 // Function to toggle favourite button

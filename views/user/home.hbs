@@ -79,21 +79,36 @@
 </section> --}}
 
 <!-- POPULAR / TRENDING MOVIES -->
-<section class="py-16 bg-gray-100">
+{{!-- <section class="py-12 bg-gray-100">
     <div class="container mx-auto px-4 text-center animate-fadeInUp">
-        <h2 class="text-3xl font-bold mb-10">Popular Movies</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- Example Movie Card -->
+        <h2 class="text-3xl font-bold mb-8">Popular Movies</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4">
             {{#if popularMovies.length}}
             {{#each popularMovies}}
-            <a href="/movie/get-movie/{{this.id}}">
+            <a href="/movie/get-movie/{{this.id}}" class="group">
                 <div
-                    class="bg-white rounded-lg overflow-hidden shadow-lg hover:scale-105 transform transition cursor-pointer">
-                    <img src="https://image.tmdb.org/t/p/original{{this.poster_path}}" alt="{{this.title}} poster"
-                        class="w-full object-cover">
-                    <div class="p-4">
-                        <h3 class="font-semibold text-lg">{{this.title}}</h3>
-                        <p class="text-gray-500 text-sm mt-2">
+                    class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 hover:scale-[1.03]">
+                    <!-- Image container with hover zoom effect -->
+                    <div class="relative pt-[150%] overflow-hidden">
+                        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}} poster"
+                            class="absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                            onerror="this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
+                        <!-- Rating badge with hover effect -->
+                        <div
+                            class="absolute bottom-2 left-2 bg-black/80 text-white text-xs px-2 py-1 rounded-full flex items-center transition-all group-hover:bg-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-yellow-400"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            {{this.vote_average}}
+                        </div>
+                    </div>
+                    <!-- Text content with hover color change -->
+                    <div class="p-3 flex-grow group-hover:bg-gray-50 transition-colors duration-300">
+                        <h3 class="font-semibold text-sm line-clamp-2 group-hover:text-blue-600 transition-colors">
+                            {{this.title}}</h3>
+                        <p class="text-gray-500 text-xs mt-1 line-clamp-1 group-hover:text-gray-700 transition-colors">
                             {{#each this.genre_names}}
                             {{this}}{{#unless @last}}, {{/unless}}
                             {{/each}}
@@ -101,11 +116,114 @@
                     </div>
                 </div>
             </a>
-
             {{/each}}
             {{/if}}
-
-            <!-- Repeat cards here -->
+        </div>
+    </div>
+</section> --}}
+<!-- POPULAR / TRENDING MOVIES -->
+{{!-- <section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4 text-center animate-fadeInUp">
+        <h2 class="text-3xl font-bold mb-8">Popular Movies</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5">
+            {{#if popularMovies.length}}
+            {{#each popularMovies}}
+            <a href="/movie/get-movie/{{this.id}}" class="group">
+                <div
+                    class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 hover:scale-[1.03]">
+                    <!-- Increased height image container -->
+                    <div class="relative pt-[160%] overflow-hidden">
+                        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}} poster"
+                            class="absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                            onerror="this.src='https://via.placeholder.com/300x480?text=Poster+Not+Available'">
+                        <!-- Rating badge -->
+                        <div
+                            class="absolute bottom-3 left-3 bg-black/80 text-white text-xs px-2 py-1 rounded-full flex items-center transition-all group-hover:bg-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-yellow-400"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            {{this.vote_average}}
+                        </div>
+                    </div>
+                    <!-- Text content with slightly more padding -->
+                    <div class="p-4 flex-grow group-hover:bg-gray-50 transition-colors duration-300">
+                        <h3 class="font-semibold text-sm line-clamp-2 group-hover:text-blue-600 transition-colors">
+                            {{this.title}}</h3>
+                        <p class="text-gray-500 text-xs mt-2 line-clamp-1 group-hover:text-gray-700 transition-colors">
+                            {{#each this.genre_names}}
+                            {{this}}{{#unless @last}}, {{/unless}}
+                            {{/each}}
+                        </p>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+            {{/if}}
+        </div>
+    </div>
+</section> --}}
+<!-- POPULAR / TRENDING MOVIES -->
+<section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4 text-center animate-fadeInUp">
+        <h2 class="text-3xl font-bold mb-8">Popular Movies</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-5">
+            {{#if popularMovies.length}}
+            {{#each popularMovies}}
+            <a href="/movie/get-movie/{{this.id}}" class="group">
+                <!-- Increased width card container -->
+                <div
+                    class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 hover:scale-[1.03] min-w-[180px]">
+                    <!-- Image container with adjusted aspect ratio -->
+                    <div class="relative pt-[150%] overflow-hidden">
+                        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}} poster"
+                            class="absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                            onerror="this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
+                        <!-- Rating badge -->
+                        <div
+                            class="absolute bottom-3 left-3 bg-black/80 text-white text-xs px-2 py-1 rounded-full flex items-center transition-all group-hover:bg-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-yellow-400"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            {{this.vote_average}}
+                        </div>
+                        <!-- Favorite button on bottom right -->
+                        <button onclick="addToFavourites(event, '{{this.id}}')"
+                            class="absolute bottom-3 right-3 p-1.5 bg-black/80 rounded-full transition-all group-hover:bg-red-500/90">
+                            {{#isMovieInFavourites this.id ../favouriteMoviesIds}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" viewBox="0 0 20 20"
+                                fill="currentColor" id="heart-{{this.id}}" data-favorite="true">
+                                <path fill-rule="evenodd"
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            {{else}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white group-hover:text-red-200"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" id="heart-{{this.id}}"
+                                data-favorite="false">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            {{/isMovieInFavourites}}
+                        </button>
+                    </div>
+                    <!-- Text content with adjusted padding -->
+                    <div class="p-3 flex-grow group-hover:bg-gray-50 transition-colors duration-300">
+                        <h3 class="font-semibold text-sm line-clamp-2 group-hover:text-blue-600 transition-colors">
+                            {{this.title}}</h3>
+                        <p class="text-gray-500 text-xs mt-1 line-clamp-1 group-hover:text-gray-700 transition-colors">
+                            {{#each this.genre_names}}
+                            {{this}}{{#unless @last}}, {{/unless}}
+                            {{/each}}
+                        </p>
+                    </div>
+                </div>
+            </a>
+            {{/each}}
+            {{/if}}
         </div>
     </div>
 </section>
@@ -153,27 +271,66 @@
 </section> --}}
 
 <!-- NEW RELEASES -->
-<section class="py-16 bg-gray-100">
+<section class="py-12 bg-gray-100">
     <div class="container mx-auto px-4 text-center animate-fadeInUp">
-        <h2 class="text-3xl font-bold mb-10">New Releases</h2>
-        <div class="flex overflow-x-auto gap-8 py-4">
-            <!-- New Release Cards -->
+        <h2 class="text-3xl font-bold mb-8">New Releases</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-5">
             {{#each newMovies}}
-            <div class="flex-shrink-0 bg-white rounded-lg shadow-lg w-64 hover:scale-105 transform transition">
-                <img src="https://image.tmdb.org/t/p/original{{this.poster_path}}" alt="{{this.title}} poster"
-                    class="w-full object-cover">
-                <div class="p-4">
-                    <h3 class="font-semibold text-lg">{{this.title}}</h3>
+            <a href="/movie/get-movie/{{this.id}}" class="group">
+                <!-- Card container -->
+                <div
+                    class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1 hover:scale-[1.03] min-w-[180px]">
+                    <!-- Image container with adjusted aspect ratio -->
+                    <div class="relative pt-[150%] overflow-hidden">
+                        <img src="https://image.tmdb.org/t/p/w500{{this.poster_path}}" alt="{{this.title}} poster"
+                            class="absolute top-0 left-0 w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
+                            onerror="this.src='https://via.placeholder.com/300x450?text=Poster+Not+Available'">
+                        <!-- Rating badge -->
+                        <div
+                            class="absolute bottom-3 left-3 bg-black/80 text-white text-xs px-2 py-1 rounded-full flex items-center transition-all group-hover:bg-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1 text-yellow-400"
+                                viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            {{this.vote_average}}
+                        </div>
+                        <!-- Favorite button on bottom right -->
+                        <button onclick="addToFavourites(event, '{{this.id}}')"
+                            class="absolute bottom-3 right-3 p-1.5 bg-black/80 rounded-full transition-all group-hover:bg-red-500/90">
+                            {{#isMovieInFavourites this.id ../favouriteMoviesIds}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" viewBox="0 0 20 20"
+                                fill="currentColor" id="heart-{{this.id}}" data-favorite="true">
+                                <path fill-rule="evenodd"
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            {{else}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white group-hover:text-red-200"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" id="heart-{{this.id}}"
+                                data-favorite="false">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            {{/isMovieInFavourites}}
+                        </button>
+                    </div>
+                    <!-- Text content with adjusted padding -->
+                    <div class="p-3 flex-grow group-hover:bg-gray-50 transition-colors duration-300">
+                        <h3 class="font-semibold text-sm line-clamp-2 group-hover:text-blue-600 transition-colors">
+                            {{this.title}}</h3>
+                        <p class="text-gray-500 text-xs mt-1 line-clamp-1 group-hover:text-gray-700 transition-colors">
+                            {{#each this.genre_names}}
+                            {{this}}{{#unless @last}}, {{/unless}}
+                            {{/each}}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            </a>
             {{/each}}
-
-
-            <!-- Add more -->
         </div>
     </div>
 </section>
-
 <!-- CALL TO ACTION -->
 {{!-- <section class="py-16 bg-blue-600 text-white text-center animate-fadeIn">
     <div class="container mx-auto px-4">

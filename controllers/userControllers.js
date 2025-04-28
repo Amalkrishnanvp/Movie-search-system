@@ -64,6 +64,14 @@ module.exports = {
       console.log("hello", userId);
 
       const movie = await movieHelpers.getMovieById(movieId);
+
+      const movieExistInDb = await movieHelpers.checkMovieExistInDb(movieId);
+
+      if (!movieExistInDb) {
+        console.log("Movie does not exist in DB, adding to DB...");
+        await movieHelpers.addMovieToDb(movie);
+      }
+
       const result = await movieHelpers.addMovieToFavourites(movie, userId);
       const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
         userId
@@ -106,6 +114,13 @@ module.exports = {
       );
       console.log("favourite movies: ", favouriteMovies);
 
+      if (!favouriteMovies.favouriteMovies) {
+        res.render("user/no-favourites", {
+          user,
+          favouriteMoviesCount,
+        })
+      }
+
       res.render("user/favourite-movies", {
         favouriteMovies: favouriteMovies.favouriteMovies,
         user,
@@ -138,6 +153,14 @@ module.exports = {
     const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
       user._id
     );
+    // const genres = await movieHelpers.getAllGenresFromTmdbApi();
+
+    // movies.forEach((movie) => {
+    //   movie.genre_names = movie.genre_ids.map((genreId) => {
+    //     const genre = genres.find((g) => g.id === genreId);
+    //     return genre ? genre.name : null;
+    //   });
+    // });
     // console.log("favourite movies: ", favouriteMovies);
 
     res.render("user/view-movies", {
@@ -146,5 +169,38 @@ module.exports = {
       favouriteMoviesIds,
       favouriteMoviesCount,
     });
+  },
+
+  // Function to remove movie from favourites
+  removeFromFavourites: async (req, res) => {
+    try {
+      const movieId = req.body.tmdbId;
+      console.log("Movie id: ", movieId);
+      const userId = req.session.user._id;
+      console.log("hello", userId);
+      const movie = await movieHelpers.getMovieById(movieId);
+
+      const result = await movieHelpers.removeMovieFromFavourites(
+        movieId,
+        userId,
+        movie
+      );
+      const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
+        userId
+      );
+      console.log("result", result);
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
+        favouriteMoviesCount: favouriteMoviesCount,
+      });
+    } catch (error) {
+      console.error("Error removing from favourites:", error);
+      res.status(500).json({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
   },
 };

@@ -49,6 +49,7 @@ module.exports = {
       Type: "Movie",
       Genre: genres,
       PosterPath: movieData.poster_path,
+      Rating: movieData.vote_average,
     });
 
     console.log("Movie inserted: ", newMovie);
@@ -70,8 +71,11 @@ module.exports = {
     let movieId = movie.id;
     console.log("movieId: ", movieId);
 
+    // const result = await addMovieToDb(movie);
+
     let movieObject = await Movie.findOne({ tmdbId: movieId });
     console.log("movieObject: ", movieObject);
+
     let movieObjectId = movieObject._id;
     console.log("movieObjectId: ", movieObjectId);
 
@@ -79,9 +83,11 @@ module.exports = {
       user: new ObjectId(userId),
     });
 
+    let isMovieInFavourites;
+
     if (userFavourites) {
       // Check if movie already exists in favourites
-      const isMovieInFavourites = userFavourites.favouriteMovies.some(
+      isMovieInFavourites = userFavourites.favouriteMovies.some(
         (favouriteMovie) => favouriteMovie === movieObjectId
       );
 
@@ -95,7 +101,11 @@ module.exports = {
           { $push: { favouriteMovies: new ObjectId(movieObjectId) } }
         );
         console.log("Movie added to favourites: ", movieId);
-        return { movieId, status: true, message: "Movie added to favourites" };
+        return {
+          movieId,
+          status: true,
+          message: `Movie added to favourites: ${movie.title}`,
+        };
       }
     } else {
       // Create favourite document to user
@@ -108,7 +118,7 @@ module.exports = {
       return {
         movieId,
         status: true,
-        message: "Movie added to favouritesssss",
+        message: `Movie added to favourites: ${movie.title}`,
       };
     }
   },
@@ -202,5 +212,57 @@ module.exports = {
     console.log("New movies: ", data.results);
     return data.results;
   },
-  
+
+  // Function to remove movie from favourites
+  removeMovieFromFavourites: async (movieId, userId, movie) => {
+    console.log("movieId: ", movieId);
+    console.log("userId: ", userId);
+
+    let movieObject = await Movie.findOne({ tmdbId: movieId });
+    console.log("movieObject: ", movieObject);
+    let movieObjectId = movieObject._id;
+    console.log("movieObjectId: ", movieObjectId);
+
+    let userFavourites = await Favourite.findOne({
+      user: new ObjectId(userId),
+    });
+
+    if (userFavourites) {
+      // Check if movie already exists in favourites
+      let isMovieInFavourites = userFavourites.favouriteMovies.some(
+        (favouriteMovie) => favouriteMovie.equals(movieObjectId)
+      );
+
+      if (!isMovieInFavourites) {
+        console.log("Movie not found in favourites: ", movieId);
+        return { status: false, message: "Movie not found in favourites" };
+      } else {
+        // Remove movie from favourites
+        await Favourite.updateOne(
+          { user: new ObjectId(userId) },
+          { $pull: { favouriteMovies: new ObjectId(movieObjectId) } }
+        );
+        console.log("Movie removed from favourites: ", movieId);
+        return {
+          status: true,
+          message: `Movie removed from favourites: ${movie.title}`,
+        };
+      }
+    } else {
+      console.log("No favourite movies found for user: ", userId);
+      return { status: false, message: "No favourite movies found for user" };
+    }
+  },
+
+  // Function to check movie is in database
+  checkMovieExistInDb: async (movieId) => {
+    const movie = await Movie.findOne({ tmdbId: movieId });
+    console.log("Movie exist in db: ", movie);
+    if (movie) {
+      return true;
+    } else {
+      return false;
+    }
+    // return movie ? true : false;
+  },
 };

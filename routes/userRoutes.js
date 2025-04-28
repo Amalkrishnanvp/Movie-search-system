@@ -16,10 +16,13 @@ router.get("/", userController.renderHomepage);
 /*GET - Get movies */
 router.get("/movies", userController.getMovies);
 
-/* GET - Add to favourites */
+/* POST - Add to favourites */
 router.post("/add-to-favourites", userController.addToFavourites);
 
 /* GET - Render favourite movies page */
 router.get("/favourites", userController.renderFavouritesPage);
+
+/* POST - Remove from favourites */
+router.post("/remove-from-favourites", userController.removeFromFavourites);
 
 module.exports = router;

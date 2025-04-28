@@ -17,31 +17,34 @@
             </div>
 
             <!-- Centered search bar with submit button (hidden on mobile) -->
-            <div class="hidden sm:flex flex-1 justify-left mx-3 md:ps-2 sm:pe-8 md:pe-28 lg:pe-0 items-center">
-                <form action="/movie/get-movies" method="get" class="w-full max-w-xl lg:w-96">
-                    <div class="relative flex">
-                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
+            <div class="hidden sm:flex flex-1 justify-left items-center mx-3 md:ps-2 sm:pe-8 md:pe-28 lg:pe-0">
+                <div class="flex items-center justify-left w-full">
+                    <form action="/movie/get-movies" method="get" class="w-full max-w-xl lg:w-96 m-0">
+                        <div class="relative flex">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input type="text" name="movieName" id="search-navbar"
+                                class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Search movies...">
+                            <button type="submit"
+                                class="p-3 text-sm font-medium text-white bg-blue-600 rounded-r-lg border border-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
                         </div>
-                        <input type="text" name="movieName" id="search-navbar"
-                            class="block w-full p-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-l-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Search movies...">
-                        <button type="submit"
-                            class="p-3 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                viewBox="0 0 20 20">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                            </svg>
-                            <span class="sr-only">Search</span>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
+
 
             <!-- Mobile menu button -->
             <div class="flex lg:hidden items-center">
@@ -62,7 +65,7 @@
                 <ul
                     class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-5 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        <a href="/"
+                        <a href="/user"
                             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 text-sm">Home</a>
                     </li>
                     <li>
@@ -72,8 +75,8 @@
                     <li class="relative">
                         <a href="/user/favourites"
                             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 text-sm">Favourites</a>
-                        <!-- Favorite count badge -->
 
+                        <!-- Favorite count badge -->
                         <span id="favourite-movies-count"
                             class="absolute top-1 -right-5 -mt-1 -mr-1 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                             {{#if favouriteMoviesCount}}
@@ -93,7 +96,7 @@
                 <div class="relative">
                     <div class="flex py-1 px-2">
                         <button type="button"
-                            class="flex items-center text-sm bg-blue-700 hover:bg-blue-600 rounded-md px-3 py-2 transition-all duration-200"
+                            class="flex items-center text-sm bg-blue-600 hover:bg-blue-700 rounded-xl px-3 py-2 transition-all duration-200"
                             id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown"
                             data-dropdown-placement="bottom">
                             <h3 class="text-white text-base me-3">{{user.name}}</h3>
@@ -150,14 +153,26 @@
             </div>
             <ul
                 class="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 rtl:space-x-reverse lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
-
                 <li>
-                    <a href="/"
-                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700  dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Movies</a>
+                    <a href="/user"
+                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700  dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Home</a>
                 </li>
                 <li>
-                    <a href="/"
+                    <a href="/user/movies"
+                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700  dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Movies</a>
+                </li>
+                <li class="relative">
+                    <a href="/user/favourites"
                         class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-blue-700  dark:text-white lg:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Favourites</a>
+                    <!-- Favorite count badge -->
+                    <span id="favourite-movies-count"
+                        class="absolute top-1 ml-2 left-24 mt-1.5  bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        {{#if favouriteMoviesCount}}
+                        {{favouriteMoviesCount}}
+                        {{else}}
+                        0
+                        {{/if}}
+                    </span>
                 </li>
 
                 <li>
@@ -176,7 +191,7 @@
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 h-24">
             <!-- Logo/Brand -->
             <div class="flex items-center">
-                <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <a href="/user" class="flex items-center space-x-3 rtl:space-x-reverse">
                     <!-- Movie camera icon -->
                     <svg class="h-8 w-8 text-blue-600 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke="currentColor">

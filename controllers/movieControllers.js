@@ -15,9 +15,21 @@ module.exports = {
     //   console.log(movieName);
 
     const movies = await movieHelpers.getMoviesByName(movieName);
+    const favouriteMoviesIds = await movieHelpers.getAllFavouritesIdsFromDb(
+      user._id
+    );
     const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
       user._id
     );
+
+    const genres = await movieHelpers.getAllGenresFromTmdbApi();
+
+    movies.forEach((movie) => {
+      movie.genre_names = movie.genre_ids.map((genreId) => {
+        const genre = genres.find((g) => g.id === genreId);
+        return genre ? genre.name : null;
+      });
+    });
 
     console.log("ithaan movies: ", movies);
 
@@ -34,6 +46,7 @@ module.exports = {
         user,
         movies,
         favouriteMoviesCount,
+        favouriteMoviesIds,
       });
     }
   },
@@ -62,6 +75,9 @@ module.exports = {
     const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
       user._id
     );
+    const favouriteMoviesIds = await movieHelpers.getAllFavouritesIdsFromDb(
+      user._id
+    );
 
     const movieId = req.params.id;
     // console.log("movie", movieId);
@@ -88,6 +104,7 @@ module.exports = {
       user,
       movieData,
       favouriteMoviesCount,
+      favouriteMoviesIds,
     });
   },
 };

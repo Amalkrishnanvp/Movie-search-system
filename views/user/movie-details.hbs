@@ -1,12 +1,4 @@
-<section class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white overflow-hidden">
-    <!-- Animated Background -->
-    <div class="absolute inset-0 overflow-hidden opacity-20">
-        <div
-            class="absolute inset-0 bg-[url('https://image.tmdb.org/t/p/original{{movieData.backdrop_path}}')] bg-cover bg-center animate-pulse-scale">
-        </div>
-        <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-gray-900/20"></div>
-    </div>
-
+<section class="min-h-screen text-gray-900 overflow-hidden">
     <!-- Main Content -->
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 z-10">
         <!-- Movie Header with Fade-in Animation -->
@@ -24,8 +16,8 @@
                         onerror="this.src='https://via.placeholder.com/500x750?text=Poster+Not+Available'">
                     <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/90 to-transparent">
                         <span
-                            class="inline-block px-3 py-1 bg-blue-600 rounded-full text-sm font-bold mb-2">{{movieData.vote_average}}/10</span>
-                        <h1 class="text-4xl font-extrabold tracking-tight">{{movieData.title}}</h1>
+                            class="inline-block px-3 py-1 bg-blue-600 rounded-full text-sm font-bold mb-2 text-white">{{movieData.vote_average}}/10</span>
+                        <h1 class="text-4xl font-extrabold tracking-tight text-white">{{movieData.title}}</h1>
                         <p class="text-xl text-blue-300 italic">{{movieData.tagline}}</p>
                     </div>
                 </div>
@@ -35,13 +27,13 @@
                     <!-- Title and Year -->
                     <div>
                         <h1
-                            class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">
+                            class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
                             {{movieData.title}}</h1>
-                        <div class="flex items-center space-x-4 mt-2">
-                            <span class="text-blue-400">{{movieData.release_date}}</span>
-                            <span class="text-gray-400">•</span>
+                        <div class="flex items-center space-x-4 mt-2 text-gray-700">
+                            <span class="text-blue-700">{{movieData.release_date}}</span>
+                            <span class="text-gray-500">•</span>
                             <span>{{movieData.runtime}} min</span>
-                            <span class="text-gray-400">•</span>
+                            <span class="text-gray-500">•</span>
                             <span class="capitalize">{{movieData.status}}</span>
                         </div>
                     </div>
@@ -50,20 +42,20 @@
                     <div class="flex flex-wrap gap-2">
                         {{#each movieData.genres}}
                         <span
-                            class="px-3 py-1 bg-blue-900/50 rounded-full text-sm font-medium backdrop-blur-sm border border-blue-500/30 hover:bg-blue-800/70 transition-all duration-200">{{name}}</span>
+                            class="px-3 py-1 bg-blue-100 rounded-full text-sm font-medium border border-blue-200 hover:bg-blue-200 transition-all duration-200">{{name}}</span>
                         {{/each}}
                     </div>
 
                     <!-- Overview -->
-                    <div class="prose prose-invert max-w-none">
-                        <h3 class="text-2xl font-bold text-blue-300 mb-2">Synopsis</h3>
+                    <div class="prose max-w-none">
+                        <h3 class="text-2xl font-bold text-blue-700 mb-2">Synopsis</h3>
                         <p class="text-lg leading-relaxed">{{movieData.overview}}</p>
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="flex flex-wrap gap-4 pt-4">
                         <button
-                            class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-1">
+                            class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30 transform hover:-translate-y-1 text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                 fill="currentColor">
                                 <path fill-rule="evenodd"
@@ -72,20 +64,40 @@
                             </svg>
                             Watch Trailer
                         </button>
-                        <button
-                            class="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/20 border border-gray-700">
+                        {{!-- <button
+                            class="px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/20 border border-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                 fill="currentColor">
                                 <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
                             </svg>
                             Add to Watchlist
-                        </button>
+                        </button> --}}
                         {{#if movieData.imdb_id}}
                         <a href="https://www.imdb.com/title/{{movieData.imdb_id}}" target="_blank"
-                            class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/30">
+                            class="px-6 py-3 bg-yellow-600 hover:bg-yellow-700 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/30 text-white">
                             <span class="font-bold">IMDb</span> {{movieData.vote_average}}
                         </a>
                         {{/if}}
+                        <button onclick="addToFavourites(event, '{{movieData.id}}')"
+                            class="p-4 bg-black/80 rounded-md transition-all duration-300 ease-in-out hover:bg-red-500/90 hover:scale-110 group">
+                            {{#isMovieInFavourites movieData.id favouriteMoviesIds}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20"
+                                fill="currentColor" id="heart-{{movieData.id}}" data-favorite="true">
+                                <path fill-rule="evenodd"
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            {{else}}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white group-hover:text-red-200"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor" id="heart-{{movieData.id}}"
+                                data-favorite="false">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                            </svg>
+                            {{/isMovieInFavourites}}
+                        </button>
+
+
                     </div>
                 </div>
             </div>
@@ -96,13 +108,13 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Production Companies -->
                 <div
-                    class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-blue-300 mb-4">Production</h3>
+                    class="bg-gray-100 rounded-xl p-6 border border-gray-200 hover:border-blue-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-blue-700 mb-4">Production</h3>
                     <ul class="space-y-4">
                         {{#each movieData.production_companies}}
                         <li class="flex items-center gap-3">
                             {{#if logo_path}}
-                            <div class="flex-shrink-0 h-10 w-10 rounded-md bg-gray-700/50 overflow-hidden">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-md bg-gray-200 overflow-hidden">
                                 <img src="https://image.tmdb.org/t/p/w200{{logo_path}}" alt="{{name}} logo"
                                     class="h-full w-full object-contain p-1"
                                     onerror="this.src='https://via.placeholder.com/100x100?text=Logo'">
@@ -110,7 +122,7 @@
                             {{/if}}
                             <div>
                                 <p class="font-medium">{{name}}</p>
-                                <p class="text-sm text-gray-400">{{origin_country}}</p>
+                                <p class="text-sm text-gray-600">{{origin_country}}</p>
                             </div>
                         </li>
                         {{/each}}
@@ -119,27 +131,27 @@
 
                 <!-- Countries & Languages -->
                 <div
-                    class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-blue-300 mb-4">Details</h3>
+                    class="bg-gray-100 rounded-xl p-6 border border-gray-200 hover:border-blue-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-blue-700 mb-4">Details</h3>
                     <div class="space-y-6">
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Countries</h4>
+                            <h4 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Countries</h4>
                             <div class="flex flex-wrap gap-2">
                                 {{#each movieData.production_countries}}
-                                <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">{{name}}</span>
+                                <span class="px-3 py-1 bg-gray-200 rounded-full text-sm">{{name}}</span>
                                 {{/each}}
                             </div>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Languages</h4>
+                            <h4 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Languages</h4>
                             <div class="flex flex-wrap gap-2">
                                 {{#each movieData.spoken_languages}}
-                                <span class="px-3 py-1 bg-gray-700/50 rounded-full text-sm">{{english_name}}</span>
+                                <span class="px-3 py-1 bg-gray-200 rounded-full text-sm">{{english_name}}</span>
                                 {{/each}}
                             </div>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-2">Budget</h4>
+                            <h4 class="text-sm font-semibold text-gray-600 uppercase tracking-wider mb-2">Budget</h4>
                             <p class="text-xl font-mono">${{movieData.budget}}</p>
                         </div>
                     </div>
@@ -147,25 +159,25 @@
 
                 <!-- Technical Specs -->
                 <div
-                    class="bg-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-blue-500/30 transition-all duration-300">
-                    <h3 class="text-xl font-bold text-blue-300 mb-4">Technical Specs</h3>
+                    class="bg-gray-100 rounded-xl p-6 border border-gray-200 hover:border-blue-300 transition-all duration-300">
+                    <h3 class="text-xl font-bold text-blue-700 mb-4">Technical Specs</h3>
                     <div class="space-y-4">
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Original Title</h4>
+                            <h4 class="text-sm font-semibold text-gray-600 uppercase tracking-wider">Original Title</h4>
                             <p class="text-lg">{{movieData.original_title}}</p>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Original Language
+                            <h4 class="text-sm font-semibold text-gray-600 uppercase tracking-wider">Original Language
                             </h4>
                             <p class="text-lg capitalize">{{movieData.original_language}}</p>
                         </div>
                         <div>
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider">Popularity</h4>
-                            <div class="w-full bg-gray-700 rounded-full h-2.5">
+                            <h4 class="text-sm font-semibold text-gray-600 uppercase tracking-wider">Popularity</h4>
+                            <div class="w-full bg-gray-300 rounded-full h-2.5">
                                 <div class="bg-blue-600 h-2.5 rounded-full" style="width: {{movieData.popularity}}%">
                                 </div>
                             </div>
-                            <p class="text-sm text-right text-gray-400 mt-1">{{movieData.popularity}}</p>
+                            <p class="text-sm text-right text-gray-600 mt-1">{{movieData.popularity}}</p>
                         </div>
                     </div>
                 </div>
@@ -175,22 +187,17 @@
 
     <!-- Custom Animation Styles -->
     <style>
-        @keyframes pulseScale {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .animate-pulse-scale {
-            animation: pulseScale 20s infinite ease-in-out;
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
         }
 
         .animate-fade-in-up {
@@ -210,23 +217,8 @@
             animation: fadeIn 1s forwards 0.9s;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
         .parallax-image {
             will-change: transform;
         }
     </style>
-
-
 </section>

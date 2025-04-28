@@ -9,6 +9,7 @@ const movieSchema = new mongoose.Schema({
   Type: { type: String, required: true },
   Genre: { type: String, required: true },
   PosterPath: { type: String, required: true },
+  Rating: { type: String, required: true },
 });
 
 // Creating a model

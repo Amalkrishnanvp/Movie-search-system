@@ -97,7 +97,7 @@ const addToFavourites = async (event, tmdbId, userId) => {
   //   };
 };
 
-// Function to deltete movie from database
+// Function to delete movie from database
 const deleteMovie = async (event, movieId) => {
   try {
     event.preventDefault();
@@ -117,6 +117,24 @@ const deleteMovie = async (event, movieId) => {
   } catch (error) {
     console.log("Post Error: ", error);
   }
+
+  // Function to suspend user 
+  
+  const suspendUser = async (event, userId) => {
+    try {
+      event.preventDefault();
+      const response = await axios.post("/user/suspend", { userId });
+      const data = response.data;
+      console.log("Suspend Response: ", data.result);
+      if (data.result.status) {
+        alert(data.result.message);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("Suspend Error: ", error);
+    }
+  };
+  
 };
 
 // Function to toggle favourite button

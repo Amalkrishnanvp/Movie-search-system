@@ -285,10 +285,24 @@ module.exports = {
     return moviesCount;
   },
 
-  // Function to get all users 
+  // Function to get all users
   getAllUsersFromDb: async () => {
     const users = await User.find();
     console.log("All users: ", users);
     return users;
+  },
+
+  // Function to suspend user
+  suspendUserAccount: async (userId) => {
+    const result = await User.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: { isSuspended: true } }
+    );
+    console.log("User suspended: ", result);
+    if (result.modifiedCount > 0) {
+      return { status: true, message: "User suspended successfully" };
+    } else {
+      return { status: false, message: "User not found" };
+    }
   },
 };

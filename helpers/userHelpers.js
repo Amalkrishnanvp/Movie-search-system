@@ -7,7 +7,11 @@ module.exports = {
   // Function for new user sign up
   doSignup: async (data) => {
     // new user's data
-    const { name, email, password } = data;
+    const { name, email, password, confirmPassword } = data;
+
+    if (password !== confirmPassword) {
+      return { success: false, message: "Passwords do not match" };
+    }
 
     try {
       // Check if the user already exists
@@ -53,6 +57,12 @@ module.exports = {
       if (!user) {
         // Check if the user is a regular user
         user = await User.findOne({ email });
+      }
+
+      if (user) {
+        if (user.isSuspended) {
+          return { logged: false, message: "User is suspended" };
+        }
       }
 
       // If the user is found, compare the provided password with hashed passowrd

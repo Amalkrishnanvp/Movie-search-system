@@ -203,4 +203,25 @@ module.exports = {
       });
     }
   },
+
+  // Function to suspend user
+  suspendUser: async (req, res) => {
+    try {
+      const userId = req.body.userId;
+      console.log("User id: ", userId);
+      const result = await movieHelpers.suspendUserAccount(userId);
+      console.log("result", result);
+
+      res.status(200).json({
+        success: true,
+        message: result.message,
+      });
+    } catch (error) {
+      console.error("Error suspending user:", error);
+      res.status(500).json({
+        success: false,
+        message: "Something went wrong",
+      });
+    }
+  },
 };

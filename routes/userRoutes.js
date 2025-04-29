@@ -25,4 +25,7 @@ router.get("/favourites", userController.renderFavouritesPage);
 /* POST - Remove from favourites */
 router.post("/remove-from-favourites", userController.removeFromFavourites);
 
+/* POST - Suspend user */
+router.post("/suspend", userController.suspendUser);
+
 module.exports = router;

@@ -3,7 +3,15 @@ const userHelpers = require("../helpers/userHelpers");
 module.exports = {
   // Function to render signup page
   renderSignupPage: async (req, res, next) => {
-    res.render("user/signup");
+    if (req.session.signUpErr) {
+      return res.render("user/signup", {
+        signUpErr: req.session.signUpErr,
+        signUpErrMessage: req.session.signUpErrMessage,
+        isSignupPage: true,
+      });
+      req.session.signUpErr = false;
+    }
+    res.render("user/signup", { isSignupPage: true });
   },
   // Function to register user
   registerUser: async (req, res) => {
@@ -15,14 +23,17 @@ module.exports = {
     // Pass user data to signup function
     const result = await userHelpers.doSignup(data);
     console.log(result);
-    console.log(result.userData);
+    // console.log(result.userData);
 
-    if (result.message) {
+    if (result.success) {
       req.session.loggedIn = true;
       req.session.user = result.userData;
       res.redirect("/");
     } else {
-      res.status(400).send(result.message);
+      req.session.signUpErr = true;
+      // Set error message in session
+      req.session.signUpErrMessage = result.message;
+      res.redirect("/auth/signup");
     }
   },
 
@@ -32,6 +43,7 @@ module.exports = {
     if (req.session.loginErr) {
       res.render("user/login", {
         loginErr: req.session.loginErr,
+        logineErrMessage: req.session.logineErrMessage,
         isLoginPage: true,
       });
       req.session.loginErr = false;
@@ -63,10 +75,12 @@ module.exports = {
           res.redirect("/");
         } else {
           req.session.loginErr = true;
+          req.session.logineErrMessage = result.message;
           res.redirect("/auth/login");
         }
       } else {
         req.session.loginErr = true;
+        req.session.logineErrMessage = result.message;
         res.redirect("/auth/login");
       }
     } catch (error) {

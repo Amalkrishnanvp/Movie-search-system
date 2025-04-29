@@ -11,4 +11,7 @@ router.get("/movies", adminController.getMoviesList);
 /* GET - Admin Dashboard */
 router.get("/dashboard", adminController.getAdminDashboard);
 
+/* GET - User management page */
+router.get("/user-management", adminController.getUserManagement);
+
 module.exports = router;

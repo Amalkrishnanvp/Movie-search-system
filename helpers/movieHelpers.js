@@ -1,6 +1,7 @@
 const Movie = require("../models/movie");
 const Favourite = require("../models/favourite");
 const { ObjectId } = require("mongoose").Types;
+const User = require("../models/user");
 
 module.exports = {
   // Function to get movies by name
@@ -264,5 +265,30 @@ module.exports = {
       return false;
     }
     // return movie ? true : false;
+  },
+
+  // Function to delete movie from database
+  deleteMovieFromDb: async (movieId) => {
+    const result = await Movie.deleteOne({ _id: new ObjectId(movieId) });
+    console.log("Movie deleted from db: ", result);
+    if (result.deletedCount > 0) {
+      return { status: true, message: "Movie deleted from database" };
+    } else {
+      return { status: false, message: "Movie not found in database" };
+    }
+  },
+
+  // Function to get movies count
+  getMoviesCount: async () => {
+    const moviesCount = await Movie.countDocuments();
+    console.log("Movies count: ", moviesCount);
+    return moviesCount;
+  },
+
+  // Function to get all users 
+  getAllUsersFromDb: async () => {
+    const users = await User.find();
+    console.log("All users: ", users);
+    return users;
   },
 };

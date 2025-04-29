@@ -107,4 +107,14 @@ module.exports = {
       favouriteMoviesIds,
     });
   },
+
+  // Function to delete movie from database
+  deleteMovie: async (req, res) => {
+    console.log("Delete movie handler called");
+    const movieId = req.body.movieId;
+    // console.log("movie", movieId);
+
+    const result = await movieHelpers.deleteMovieFromDb(movieId);
+    res.json({ result });
+  },
 };

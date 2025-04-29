@@ -11,4 +11,7 @@ router.post("/add-movie", movieController.addMovie);
 /* GET - Get movie by id */
 router.get("/get-movie/:id", movieController.getMovieById);
 
+/* POST - Delete movie from database */
+router.post("/delete-movie", movieController.deleteMovie);
+
 module.exports = router;

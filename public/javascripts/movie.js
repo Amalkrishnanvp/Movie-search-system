@@ -97,5 +97,27 @@ const addToFavourites = async (event, tmdbId, userId) => {
   //   };
 };
 
+// Function to deltete movie from database
+const deleteMovie = async (event, movieId) => {
+  try {
+    event.preventDefault();
+    event.stopPropagation();
+    // alert(movieId);
+    const response = await axios.post("/movie/delete-movie", {
+      movieId,
+    });
+
+    const data = response.data;
+    console.log("Post Response: ", data.result);
+
+    if (data.result.status) {
+      alert(data.result.message);
+      window.location.reload();
+    }
+  } catch (error) {
+    console.log("Post Error: ", error);
+  }
+};
+
 // Function to toggle favourite button
 // toggleFavouriteButton = () => {};

@@ -112,6 +112,14 @@ module.exports = {
     const favouriteMovies = userFavourites.favouriteMovies;
     const moviesCount = await movieHelpers.getMoviesCount();
 
+    if(!favouriteMovies || favouriteMovies.length === 0) {
+      return res.render("admin/no-favourites", {
+        user,
+        moviesCount,
+        layout: "layouts/adminLayout",
+      });
+    }
+
     res.render("admin/user-favourites", {
       user,
       favouriteMovies,

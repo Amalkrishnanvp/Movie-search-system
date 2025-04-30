@@ -1,114 +1,138 @@
-# Movie Search System
+# 🎬 Movie Search System
 
-A full-stack web application that allows users to search for movies, view details, manage favorites, and perform administrative tasks. Built using Node.js, Express, Handlebars, and MongoDB, this project integrates with the TMDB API for movie data.
+A **full-stack web application** for discovering movies, managing favorites, and performing administrative tasks. Built with **Node.js**, **Express.js**, **MongoDB**, **Handlebars**, and **Tailwind CSS**, and powered by the **TMDB API**.
 
-## Features
+---
 
-- **User Features**:
+## ✨ Features
 
-  - Search for movies by title.
-  - View detailed information about movies, including genre, release date, and more.
-  - Add movies to favorites and manage them.
-  - User authentication (signup/login).
+### 👤 User
 
-- **Admin Features**:
+- 🔍 Search movies by title.
+- 📄 View movie details: genre, release date, rating, etc.
+- ❤️ Add and manage favorite movies.
+- 🔐 Secure signup and login system.
 
-  - Manage movies in the database.
-  - View user details and manage user accounts.
-  - Access admin dashboard with analytics.
+### 🛠️ Admin
 
-- **General**:
-  - Responsive and user-friendly interface.
-  - Integration with TMDB API for real-time movie data.
+- 🎞️ Manage movies in the database (CRUD).
+- 👥 View and manage registered users.
+- 📊 Access a responsive admin dashboard with analytics.
 
-## Technologies Used
+### 🌐 General
 
-- **Frontend**: HTML, CSS (Tailwind CSS), JavaScript
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB
-- **Templating Engine**: Handlebars (hbs)
-- **API**: TMDB API
+- ✅ Responsive, clean UI with Tailwind CSS.
+- ⚡ Real-time movie data via TMDB API integration.
 
-## Installation
+---
 
-### Prerequisites
+## 🛠️ Tech Stack
+
+| Layer      | Tech                           |
+| ---------- | ------------------------------ |
+| Frontend   | HTML, Tailwind CSS, JavaScript |
+| Backend    | Node.js, Express.js            |
+| Database   | MongoDB + Mongoose             |
+| Templating | Handlebars (hbs)               |
+| API        | TMDB API                       |
+
+---
+
+## 🚀 Installation
+
+### 📦 Prerequisites
 
 - [Node.js](https://nodejs.org/)
 - [MongoDB](https://www.mongodb.com/)
-- TMDB API Key (Sign up at [TMDB](https://www.themoviedb.org/))
+- [TMDB API Key](https://www.themoviedb.org/)
 
-### Steps
+### 📁 Setup
 
-1. **Clone the repository**:
-
+1. **Clone the repository**
    ```bash
    git clone https://github.com/your-repo/movie-search-system.git
    cd movie-search-system
-
    ```
+2. **Install dependencies**
 
-2. **Install dependencies**:
-   npm install
+```npm install
 
-3. Set up environment variables: Create a .env file in the root directory and add the following:
+```
 
-PORT=3000
+3. **Create a .env file**
+
+```PORT=3000
 MONGO_URI=your_mongodb_connection_string
 TMDB_API_KEY=your_tmdb_api_key
 SESSION_SECRET=your_session_secret
 
-4. Run the application:
 
-npm run start
+```
 
-5. Access the application: Open your browser and go to http://localhost:3000.
+4. **Run the application**
 
-Project Structure
+```npm start
+
+
+```
+
+5. **Open in browser**
+
+```http://localhost:3000
+
+
+
+```
+
+## 📂 Project Structure
 
 Movie-Search-System/
-│
-├── controllers/ # Application logic (e.g., user, movie, admin controllers)
-├── helpers/ # Helper functions for database and API interactions
-├── models/ # Mongoose models (e.g., User, Movie, Favourite)
+├── controllers/ # App logic (user, movie, admin)
+├── helpers/ # API and DB utilities
+├── models/ # MongoDB schemas
 ├── public/ # Static assets (CSS, JS, images)
-│ ├── javascripts/ # Client-side JavaScript
-│ ├── stylesheets/ # CSS files
-│ └── images/ # Image assets
-├── routes/ # Express routes (e.g., userRoutes, adminRoutes)
+│ ├── javascripts/
+│ ├── stylesheets/
+│ └── images/
+├── routes/ # Express routes
 ├── views/ # Handlebars templates
-│ ├── layouts/ # Layout templates
-│ ├── admin/ # Admin-specific views
-│ └── user/ # User-specific views
+│ ├── layouts/
+│ ├── admin/
+│ └── user/
 ├── .env # Environment variables
-├── app.js # Main application entry point
-└── [package.json](http://_vscodecontentref_/1) # Project metadata and dependencies
+├── app.js # Application entry point
+└── package.json # Project metadata
 
-API Endpoints
+## 📡 API Endpoints
 
-User Routes
+### 👤 User Routes
 
-- GET /auth/login - Render login page.
-- POST /auth/signup - Handle user signup.
-- GET /movies - Search for movies.
-- POST /user/add-to-favourites - Add a movie to favorites.
+- GET /auth/login — Render login page
 
-Admin Routes
-- GET /admin/dashboard - View admin dashboard.
-- GET /admin/movies - Manage movies.
-- GET /admin/user-management - Manage users.
+- POST /auth/signup — Handle signup
 
-How It Works
+- GET /movies — Movie search
 
-1. Users can search for movies using the TMDB API.
-2. Admins can manage movies and users through the admin panel.
-3. The application uses MongoDB to store user data, favorite movies, and other information.
+- POST /user/add-to-favourites — Add to favorites
 
-Screenshots
-User Signup Page
-Signup Page
+### 🔧 Admin Routes
 
-Admin Dashboard
-Admin Dashboard
+- GET /admin/dashboard — View admin dashboard
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+- GET /admin/movies — Manage movie records
+
+- GET /admin/user-management — Manage users
+
+## ⚙️ How It Works
+
+1. Users search for movies via the TMDB API.
+
+2. Authenticated users can favorite movies.
+
+3. Admins manage movies and users from a dedicated dashboard.
+
+4. All user and movie data is stored securely in MongoDB.
+
+## 📄 License
+
+This project is licensed under the MIT License. See the LICENSE file for more info.

@@ -56,7 +56,6 @@ A **full-stack web application** for discovering movies, managing favorites, and
 2. **Install dependencies**
 
 ```npm install
-
 ```
 
 3. **Create a .env file**
@@ -65,43 +64,38 @@ A **full-stack web application** for discovering movies, managing favorites, and
 MONGO_URI=your_mongodb_connection_string
 TMDB_API_KEY=your_tmdb_api_key
 SESSION_SECRET=your_session_secret
-
-
 ```
 
 4. **Run the application**
 
 ```npm start
-
-
 ```
 
 5. **Open in browser**
 
 ```http://localhost:3000
-
-
-
 ```
 
 ## 📂 Project Structure
 
+```plaintext
 Movie-Search-System/
-├── controllers/ # App logic (user, movie, admin)
-├── helpers/ # API and DB utilities
-├── models/ # MongoDB schemas
-├── public/ # Static assets (CSS, JS, images)
-│ ├── javascripts/
-│ ├── stylesheets/
-│ └── images/
-├── routes/ # Express routes
-├── views/ # Handlebars templates
-│ ├── layouts/
-│ ├── admin/
-│ └── user/
-├── .env # Environment variables
-├── app.js # Application entry point
-└── package.json # Project metadata
+├── controllers/         # App logic (user, movie, admin)
+├── helpers/             # API and DB utilities
+├── models/              # MongoDB schemas
+├── public/              # Static assets (CSS, JS, images)
+│   ├── javascripts/
+│   ├── stylesheets/
+│   └── images/
+├── routes/              # Express routes
+├── views/               # Handlebars templates
+│   ├── layouts/
+│   ├── admin/
+│   └── user/
+├── .env                 # Environment variables
+├── app.js               # Application entry point
+└── package.json         # Project metadata
+```
 
 ## 📡 API Endpoints
 

@@ -49,13 +49,14 @@ A **full-stack web application** for discovering movies, managing favorites, and
 ### 📁 Setup
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-repo/movie-search-system.git
-   cd movie-search-system
-   ```
+```bash
+git clone https://github.com/your-repo/movie-search-system.git
+cd movie-search-system
+```
 2. **Install dependencies**
 
-```npm install
+```bash
+npm install
 ```
 
 3. **Create a .env file**
@@ -68,12 +69,14 @@ SESSION_SECRET=your_session_secret
 
 4. **Run the application**
 
-```npm start
+```bash
+npm start
 ```
 
 5. **Open in browser**
 
-```http://localhost:3000
+```bash
+http://localhost:3000
 ```
 
 ## 📂 Project Structure

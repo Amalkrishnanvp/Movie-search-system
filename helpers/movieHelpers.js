@@ -2,6 +2,7 @@ const Movie = require("../models/movie");
 const Favourite = require("../models/favourite");
 const { ObjectId } = require("mongoose").Types;
 const User = require("../models/user");
+require("dotenv").config();
 
 module.exports = {
   // Function to get movies by name
@@ -9,7 +10,7 @@ module.exports = {
     const apiKey = "aefbb563";
     const title = movieName;
 
-    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const tmdbApiKey = process.env.API_KEY;
 
     const response = await fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=${tmdbApiKey}&query=${title}`
@@ -25,7 +26,7 @@ module.exports = {
     // const apiKey = "aefbb563";
     const id = movieId;
 
-    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const tmdbApiKey = process.env.API_KEY;
 
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbApiKey}` // Use 'id' instead of 'movieId'
@@ -183,7 +184,7 @@ module.exports = {
 
   // Function to get popular movies from TMDB API
   getPopularMoviesFromTmdbApi: async () => {
-    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const tmdbApiKey = process.env.API_KEY;
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/popular?api_key=${tmdbApiKey}`
     );
@@ -194,7 +195,7 @@ module.exports = {
 
   // Function to get genres from TMDB API
   getAllGenresFromTmdbApi: async () => {
-    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const tmdbApiKey = process.env.API_KEY;
     const response = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${tmdbApiKey}`
     );
@@ -205,7 +206,7 @@ module.exports = {
 
   // Function to get new movies from TMDB API
   getNewMoviesFromTmdbApi: async () => {
-    const tmdbApiKey = "b7e28ca6a866eedf4ead50f7f22135b1";
+    const tmdbApiKey = process.env.API_KEY;
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${tmdbApiKey}`
     );

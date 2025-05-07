@@ -114,7 +114,7 @@ module.exports = {
       );
       console.log("favourite movies: ", favouriteMovies);
 
-      if (!favouriteMovies.favouriteMovies) {
+      if (!favouriteMovies.favouriteMovies || favouriteMovies.favouriteMovies.length === 0) {
         res.render("user/no-favourites", {
           user,
           favouriteMoviesCount,

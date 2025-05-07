@@ -1,6 +1,6 @@
 <section class="relative bg-gray-900 text-white min-h-screen flex items-center justify-center px-4">
     <!-- Background image -->
-    <div class="absolute inset-0">
+    <div class="absolute inset-0 ">
         <img src="/images/heroImage.jpg" alt="Movie Background" class="w-full h-full object-cover opacity-40">
     </div>
 
@@ -9,11 +9,13 @@
         <h1 class="text-4xl md:text-6xl font-bold mb-6">Find Your Favorite Movies</h1>
         <p class="text-lg md:text-xl mb-8 text-gray-300">Search and discover movies instantly</p>
         <div class="flex justify-center">
-            <input type="text" placeholder="Search for a movie..."
-                class="w-72 md:w-96 p-3 rounded-l-full text-black focus:outline-none">
-            <button class="bg-blue-600 hover:bg-blue-700 p-3 rounded-r-full">
-                Search
-            </button>
+            <form action="/movie/get-movies" method="get" class="flex items-center">
+                <input type="text" placeholder="Search for a movie..."
+                    class="w-72 md:w-96 p-3 rounded-l-full text-black focus:outline-none">
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 p-3 rounded-r-full">
+                    Search
+                </button>
+            </form>
         </div>
     </div>
 </section>

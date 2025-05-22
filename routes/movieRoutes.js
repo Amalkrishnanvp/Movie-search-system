@@ -14,4 +14,6 @@ router.get("/get-movie/:id", movieController.getMovieById);
 /* POST - Delete movie from database */
 router.post("/delete-movie", movieController.deleteMovie);
 
+router.post("/delete-selected-movies", movieController.deleteSelectedMovies);
+
 module.exports = router;

@@ -117,4 +117,13 @@ module.exports = {
     const result = await movieHelpers.deleteMovieFromDb(movieId);
     res.json({ result });
   },
+
+  // Function to delete mutliple selected movies from database
+  deleteSelectedMovies: async (req, res) => {
+    const movieIds = req.body.movieIds;
+    console.log(movieIds);
+
+    const result = await movieHelpers.deleteSelectedMovies(movieIds);
+    res.json({ result });
+  },
 };

@@ -17,7 +17,7 @@ router.get("/", userController.renderHomepage);
 router.get("/movies", userController.getMovies);
 
 /* POST - Add to favourites */
-router.post("/add-to-favourites", userController.addToFavourites);
+router.post("/add-to-favourites", userController.addToFavourites); 
 
 /* GET - Render favourite movies page */
 router.get("/favourites", userController.renderFavouritesPage);

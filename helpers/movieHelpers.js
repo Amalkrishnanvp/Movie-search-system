@@ -306,4 +306,19 @@ module.exports = {
       return { status: false, message: "User not found" };
     }
   },
+
+  // Function to delete selected movies
+  deleteSelectedMovies: async (movieIds) => {
+    const result = await Movie.deleteMany({
+      _id: {
+        $in: movieIds,
+      },
+    });
+
+    if (result.deletedCount  > 0) {
+      return { status: true, message: "Selected Movies Deleted" };
+    } else {
+      return { status: false, message: "Can't delete movies" };
+    }
+  },
 };

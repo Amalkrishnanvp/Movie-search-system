@@ -17,4 +17,5 @@ router.get("/user-management", adminController.getUserManagement);
 /* GET - Get user favourites */
 router.get("/user-favourites/:userId", adminController.getUserFavourites);
 
+
 module.exports = router;

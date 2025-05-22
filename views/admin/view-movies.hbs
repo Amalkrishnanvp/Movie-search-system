@@ -2,7 +2,13 @@
   <div class="px-6 py-4">
     <div class="flex justify-center">
       <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full bg-gray-900">
-        <h2 class="text-white p-5 text-xl font-bold text-center">Movies</h2>
+        <div class="flex justify-between items-center p-5">
+          <h2 class="text-white text-xl font-bold">Movies</h2>
+          <button id="deleteSelectedBtn" onclick="deleteSelectedMovies()"
+            class=" bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed ">
+            Delete Selected
+          </button>
+        </div>
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -21,6 +27,10 @@
               <th scope="col" class="px-6 py-3">
                 Action
               </th>
+              <th scope="col" class="px-6 py-3">
+                <input type="checkbox" id="selectAllCheckbox"
+                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -33,7 +43,8 @@
               </td>
 
               <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                <img class="w-10 h-10 rounded-full" src="https://image.tmdb.org/t/p/original{{this.PosterPath}}" alt="Jese image">
+                <img class="w-10 h-10 rounded-full" src="https://image.tmdb.org/t/p/original{{this.PosterPath}}"
+                  alt="Jese image">
                 <div class="ps-3">
                   <div class="text-base font-semibold">{{this.Title}}</div>
                   <div class="font-normal text-gray-500">{{this.Genre}}</div>
@@ -48,18 +59,20 @@
                 </div>
               </td>
               <td class="px-6 py-4">
-                <a href="" onclick="deleteMovie(event, '{{this.id}}')" class="font-medium text-red-600 hover:underline">Delete</a>
+                <a href="" onclick="deleteMovie(event, '{{this.id}}')"
+                  class="font-medium text-red-600 hover:underline">Delete</a>
+              </td>
+              <td class="px-6 py-4">
+                <input type="checkbox"
+                  class="movie-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  name="selectedMovies" value="{{this.id}}">
               </td>
             </tr>
             {{/each}}
             {{/if}}
-
-
           </tbody>
         </table>
       </div>
-
-
     </div>
   </div>
 </section>

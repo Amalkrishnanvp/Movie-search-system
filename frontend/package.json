@@ -1,0 +1,11 @@
+{
+  "name": "movie-search-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/input.css -o ./public/stylesheets/style.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17",
+    "flowbite": "^3.1.2"
+  }
+}

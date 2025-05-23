@@ -3,26 +3,31 @@ const movieHelpers = require("../helpers/movieHelpers");
 module.exports = {
   // Get home page
   getAdminPanel: async (req, res) => {
-    // Access if session exists
-    let user = req.session.user;
-    // console.log("User session: ", user);
+    try {
+      // Access if session exists
+      let user = req.session.user;
+      // console.log("User session: ", user);
 
-    if (!user || user.role !== "admin") {
-      return res.redirect("/auth/login");
+      if (!user || user.role !== "admin") {
+        return res.redirect("/auth/login");
+      }
+
+      // Call function to get all movies from database
+      // const movies = await movieHelpers.getAllMoviesFromDb();
+
+      const moviesCount = await movieHelpers.getMoviesCount();
+      console.log("Movies count: ", moviesCount);
+
+      res.render("admin/admin-dashboard", {
+        user,
+        moviesCount,
+        isAdmin: user && user.role === "admin",
+        layout: "layouts/adminLayout",
+      });
+    } catch (error) {
+      console.error("Error rendering homepage:", err);
+      return res.status(500).send("Internal Server Error");
     }
-
-    // Call function to get all movies from database
-    // const movies = await movieHelpers.getAllMoviesFromDb();
-
-    const moviesCount = await movieHelpers.getMoviesCount();
-    console.log("Movies count: ", moviesCount);
-
-    res.render("admin/admin-dashboard", {
-      user,
-      moviesCount,
-      isAdmin: user && user.role === "admin",
-      layout: "layouts/adminLayout",
-    });
   },
 
   // Get movies list page
@@ -112,7 +117,7 @@ module.exports = {
     const favouriteMovies = userFavourites.favouriteMovies;
     const moviesCount = await movieHelpers.getMoviesCount();
 
-    if(!favouriteMovies || favouriteMovies.length === 0) {
+    if (!favouriteMovies || favouriteMovies.length === 0) {
       return res.render("admin/no-favourites", {
         user,
         moviesCount,

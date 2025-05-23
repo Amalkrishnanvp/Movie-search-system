@@ -26,7 +26,7 @@ module.exports = {
         name,
         email,
         password: hashedPassword,
-        role: "user",
+        role: "admin",
       };
 
       await Admin.insertOne(adminData);

@@ -5,6 +5,7 @@ const hbs = require("hbs");
 const path = require("path");
 const { connectToDb } = require("./config/connection");
 const session = require("express-session");
+const adminCreation = require("./adminCreation");
 
 // Register a helper to add 1 to the index
 hbs.registerHelper("addOne", (index) => {
@@ -46,7 +47,7 @@ const authRouter = require("./routes/authRoutes");
 const movieRouter = require("./routes/movieRoutes");
 
 // Serve static files from 'public' folder
-app.use(express.static("public"));
+app.use(express.static("../frontend/public"));
 
 // Parse json bodies
 app.use(express.json());
@@ -69,16 +70,26 @@ app.get("/", async (req, res) => {
   res.redirect("/user");
 });
 
-// Connect to db
-connectToDb();
-
 // Use routes
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
 app.use("/movie", movieRouter);
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server started running on port: ${port}`);
-});
+const startServer = async () => {
+  try {
+    // Connect to db
+    await connectToDb();
+    await adminCreation.createAdmin();
+
+    // Start server
+    app.listen(port, () => {
+      console.log(`Server started running on port: ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to DB, exiting...", error);
+    process.exit(1);
+  }
+};
+
+startServer();

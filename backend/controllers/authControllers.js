@@ -65,23 +65,23 @@ module.exports = {
           // Save user data to session
           req.session.user = result.userData;
 
-          res.redirect("/admin");
+          return res.redirect("/admin");
         } else if (result.role === "user") {
           req.session.loggedIn = true;
 
           // Save user data to session
           req.session.user = result.userData;
 
-          res.redirect("/");
+          return res.redirect("/");
         } else {
           req.session.loginErr = true;
           req.session.logineErrMessage = result.message;
-          res.redirect("/auth/login");
+          return res.redirect("/auth/login");
         }
       } else {
         req.session.loginErr = true;
         req.session.logineErrMessage = result.message;
-        res.redirect("/auth/login");
+        return res.redirect("/auth/login");
       }
     } catch (error) {
       console.error("Error in login route: ", error);

@@ -5,53 +5,60 @@ const movieHelpers = require("../helpers/movieHelpers");
 module.exports = {
   // Function to render home page
   renderHomepage: async (req, res) => {
-    console.log("home page router");
-    // Access if session exists
-    let user = req.session.user;
-    console.log("User session: ", user);
-    // let userId = req.session.user._id;
-    // console.log("User id: ", userId);
+    try {
+      console.log("home page router");
+      // Access if session exists
+      let user = req.session.user;
+      if (user) {
+        console.log("User session: ", user);
+      }
+      // let userId = req.session.user._id;
+      // console.log("User id: ", userId);
 
-    if (!user || user.role !== "user") {
-      return res.redirect("/auth/login");
-    }
+      if (!user || user.role !== "user") {
+        return res.redirect("/auth/login");
+      }
 
-    const userId = user._id;
-    console.log("User id: ", userId);
-    // Call function to get all movies
-    const movies = await movieHelpers.getAllMoviesFromDb();
-    const favouriteMoviesIds = await movieHelpers.getAllFavouritesIdsFromDb(
-      user._id
-    );
-    console.log("favourite movies ids: ", favouriteMoviesIds);
-    const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
-      user._id
-    );
-    // console.log("favourite movies: ", favouriteMovies);
+      const userId = user._id;
+      console.log("User id: ", userId);
+      // Call function to get all movies
+      const movies = await movieHelpers.getAllMoviesFromDb();
+      const favouriteMoviesIds = await movieHelpers.getAllFavouritesIdsFromDb(
+        user._id
+      );
+      console.log("favourite movies ids: ", favouriteMoviesIds);
+      const favouriteMoviesCount = await movieHelpers.getFavouriteMoviesCount(
+        user._id
+      );
+      // console.log("favourite movies: ", favouriteMovies);
 
-    const popularMovies = await movieHelpers.getPopularMoviesFromTmdbApi();
-    console.log("popular movies: ", popularMovies);
-    const genres = await movieHelpers.getAllGenresFromTmdbApi();
+      const popularMovies = await movieHelpers.getPopularMoviesFromTmdbApi();
+      console.log("popular movies: ", popularMovies);
+      const genres = await movieHelpers.getAllGenresFromTmdbApi();
 
-    popularMovies.forEach((movie) => {
-      movie.genre_names = movie.genre_ids.map((genreId) => {
-        const genre = genres.find((g) => g.id === genreId);
-        return genre ? genre.name : null;
+      popularMovies.forEach((movie) => {
+        movie.genre_names = movie.genre_ids.map((genreId) => {
+          const genre = genres.find((g) => g.id === genreId);
+          return genre ? genre.name : null;
+        });
       });
-    });
 
-    const newMovies = await movieHelpers.getNewMoviesFromTmdbApi();
+      const newMovies = await movieHelpers.getNewMoviesFromTmdbApi();
 
-    res.render("user/home", {
-      movies,
-      user,
-      isUser: user && user.role === "user",
-      favouriteMoviesIds,
-      favouriteMoviesCount,
-      popularMovies,
-      genres,
-      newMovies,
-    });
+      res.render("user/home", {
+        movies,
+        user,
+        isUser: user && user.role === "user",
+        favouriteMoviesIds,
+        favouriteMoviesCount,
+        popularMovies,
+        genres,
+        newMovies,
+      });
+    } catch (error) {
+      console.error("Error rendering homepage:", err);
+      return res.status(500).send("Internal Server Error");
+    }
   },
 
   // Function to add movie to favourites
@@ -114,11 +121,14 @@ module.exports = {
       );
       console.log("favourite movies: ", favouriteMovies);
 
-      if (!favouriteMovies.favouriteMovies || favouriteMovies.favouriteMovies.length === 0) {
+      if (
+        !favouriteMovies.favouriteMovies ||
+        favouriteMovies.favouriteMovies.length === 0
+      ) {
         res.render("user/no-favourites", {
           user,
           favouriteMoviesCount,
-        })
+        });
       }
 
       res.render("user/favourite-movies", {

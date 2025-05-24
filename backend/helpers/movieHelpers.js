@@ -281,9 +281,14 @@ module.exports = {
 
   // Function to get movies count
   getMoviesCount: async () => {
-    const moviesCount = await Movie.countDocuments();
-    console.log("Movies count: ", moviesCount);
-    return moviesCount;
+    try {
+      const moviesCount = await Movie.countDocuments();
+      console.log("Movies count: ", moviesCount);
+      return moviesCount;
+    } catch (error) {
+      console.log("Error happened: ", error);
+      return error;
+    }
   },
 
   // Function to get all users
@@ -315,7 +320,7 @@ module.exports = {
       },
     });
 
-    if (result.deletedCount  > 0) {
+    if (result.deletedCount > 0) {
       return { status: true, message: "Selected Movies Deleted" };
     } else {
       return { status: false, message: "Can't delete movies" };

@@ -43,7 +43,7 @@ module.exports = {
     if (req.session.loginErr) {
       res.render("user/login", {
         loginErr: req.session.loginErr,
-        logineErrMessage: req.session.logineErrMessage,
+        loginErrMessage: req.session.loginErrMessage,
         isLoginPage: true,
       });
       req.session.loginErr = false;
@@ -75,17 +75,20 @@ module.exports = {
           return res.redirect("/");
         } else {
           req.session.loginErr = true;
-          req.session.logineErrMessage = result.message;
+          req.session.loginErrMessage = result.message;
           return res.redirect("/auth/login");
         }
       } else {
         req.session.loginErr = true;
-        req.session.logineErrMessage = result.message;
+        req.session.loginErrMessage = result.message;
         return res.redirect("/auth/login");
       }
     } catch (error) {
       console.error("Error in login route: ", error);
-      return res.status(400).send("Internal server error");
+      // Only send error response if no redirect has occurred
+      if (!res.headersSent) {
+        return res.status(500).send("Internal server error");
+      }
     }
   },
 

@@ -18,7 +18,7 @@ module.exports = {
       const moviesCount = await movieHelpers.getMoviesCount();
       console.log("Movies count: ", moviesCount);
 
-      res.render("admin/admin-dashboard", {
+      return res.render("admin/admin-dashboard", {
         user,
         moviesCount,
         isAdmin: user && user.role === "admin",
